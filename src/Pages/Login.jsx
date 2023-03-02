@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
 export default function Login() {
   const [isValid, setIsValid] = useState(true);
+  const history = useHistory();
   const { user, setUser } = useContext(RecipesContext);
 
   const validation = () => {
@@ -16,6 +18,11 @@ export default function Login() {
   useEffect(() => {
     validation();
   }, [user]);
+
+  const handleClick = () => {
+    localStorage.setItem('user', JSON.stringify({ email: user.email }));
+    history.push('/meals');
+  };
 
   return (
     <div>
@@ -37,6 +44,7 @@ export default function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ isValid }
+        onClick={ handleClick }
       >
         Enter
       </button>

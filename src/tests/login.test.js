@@ -1,11 +1,12 @@
-import { screen, render } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { renderWithRouter } from '../context/helpers/renderWith';
 import App from '../App';
 import RecipesProvider from '../context/RecipesProvider';
 
 describe('Testando a tela de Login', () => {
   test('Verifica se a tela Login é renderizada corretamente', () => {
-    render(
+    renderWithRouter(
       <RecipesProvider>
         <App />
       </RecipesProvider>,
@@ -13,7 +14,7 @@ describe('Testando a tela de Login', () => {
   });
 
   test('Verifica se é renderizado os campos de email e senha na tela', () => {
-    render(
+    renderWithRouter(
       <RecipesProvider>
         <App />
       </RecipesProvider>,
@@ -25,7 +26,7 @@ describe('Testando a tela de Login', () => {
   });
 
   test('Verifica se existe um button com o texto Entrar', () => {
-    render(
+    renderWithRouter(
       <RecipesProvider>
         <App />
       </RecipesProvider>,
@@ -35,21 +36,21 @@ describe('Testando a tela de Login', () => {
   });
 
   test('Verifica se o button é habilitado caso email e password estejam corretos', () => {
-    render(
+    renderWithRouter(
       <RecipesProvider>
         <App />
       </RecipesProvider>,
     );
-    const email = screen.getByTestId('email-input');
-    const password = screen.getByTestId('password-input');
+    const email = screen.getByPlaceholderText('email');
+    const password = screen.getByPlaceholderText('password');
     const button = screen.getByRole('button', { name: /Enter/i });
     userEvent.type(email, 'teste@teste.com');
-    userEvent.type(password, '123456');
+    userEvent.type(password, '1234567');
     expect(button).toBeEnabled();
   });
 
   test('Verifica se o button é desabilitado caso email e password estejam incorretos', () => {
-    render(
+    renderWithRouter(
       <RecipesProvider>
         <App />
       </RecipesProvider>,
@@ -60,5 +61,21 @@ describe('Testando a tela de Login', () => {
     userEvent.type(email, 'testste.com');
     userEvent.type(password, '1234');
     expect(button).toBeDisabled();
+  });
+
+  test('Verifica se ao clicar np botão é redirecionado para a home', () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+    );
+    const email = screen.getByTestId('email-input');
+    const password = screen.getByTestId('password-input');
+    userEvent.type(email, 'teste@teste.com');
+    userEvent.type(password, '1234567');
+    const button = screen.getByRole('button', { name: /Enter/i });
+    userEvent.click(button);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/meals');
   });
 });
