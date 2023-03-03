@@ -1,25 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { fetchApiFirstLetter,
+  fetchApiIngredients, fetchApiName } from '../services/FetchApi';
 
+// Created componet Search Bar
 export default function SearchBar() {
-  // Created componet Search Bar
+  const [filters, setFilters] = useState('');
+  const [resultApi, setResultApi] = useState(false);
+
+  const handleClick = async () => {
+    if (resultApi === 'ingredient') {
+      await fetchApiIngredients(filters);
+    }
+    if (resultApi === 'name') {
+      await fetchApiName(filters);
+    }
+    if (resultApi === 'firstLetter') {
+      const request = await fetchApiFirstLetter(filters);
+      console.log(request);
+    }
+  };
+
   return (
-    <section>
+    <section className="searchBar">
       <div>
         <input
           data-testid="search-input"
           type="text"
+          value={ filters }
           placeholder="Buscar Receita"
           className="search-input"
+          onChange={ ({ target }) => setFilters(target.value) }
         />
         <div className="radioFilters">
           <div>
             <input
               type="radio"
-              id="Ingredient"
               name="radioFilter"
-              value="Ingredient"
+              value="ingredient"
               data-testid="ingredient-search-radio"
               className="search-radio"
+              // checked={ setResultApi(true) }
+              onChange={ ({ target }) => setResultApi(target.value) }
             />
             <label htmlFor="Ingredient">
               Ingredient
@@ -28,11 +49,12 @@ export default function SearchBar() {
           <div>
             <input
               type="radio"
-              id="Name"
               name="radioFilter"
-              value="Name"
+              value="name"
               data-testid="name-search-radio"
               className="search-radio"
+              // checked={ setResultApi(true) }
+              onChange={ ({ target }) => setResultApi(target.value) }
             />
             <label htmlFor="Name">
               Name
@@ -41,11 +63,12 @@ export default function SearchBar() {
           <div>
             <input
               type="radio"
-              id="firstLetter"
               name="radioFilter"
               value="firstLetter"
               data-testid="first-letter-search-radio"
               className="search-radio"
+              // checked={ setResultApi(true) }
+              onChange={ ({ target }) => setResultApi(target.value) }
             />
             <label htmlFor="firstLetter">
               First letter
@@ -56,7 +79,7 @@ export default function SearchBar() {
           type="button"
           data-testid="exec-search-btn"
           className="search-button"
-          onClick={ () => {} }
+          onClick={ handleClick }
         >
           Search
         </button>
