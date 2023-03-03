@@ -8,6 +8,7 @@ function Header() {
   const history = useHistory();
   const [title, setTitle] = useState(''); // title of the page
   const [loadSearch, setLoadSearch] = useState(true); // responsible for controlling the rendering of the search icon
+  const [hiddenSearchBtn, setHiddenSearchBtn] = useState(false);
 
   /**
    * responsible for capturing the patch and treating it to use as the title of the page
@@ -47,8 +48,17 @@ function Header() {
 
   return (
     <div>
+      {hiddenSearchBtn && (
+        <input
+          type="text"
+          name="input-search"
+          id="inputSearch"
+          data-testid="search-input"
+          placeholder="Buscar Receita"
+        />)}
       <button
         type="button"
+        onClick={ () => setHiddenSearchBtn(!hiddenSearchBtn) }
       >
         {loadSearch && (
           <img

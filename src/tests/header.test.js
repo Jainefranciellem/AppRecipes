@@ -43,4 +43,44 @@ describe('testando Header', () => {
     screen.getByRole('heading', { name: /profile/i });
     expect(history.location.pathname).toBe('/profile');
   });
+
+  test('Testa a funcionalidade hidden do search button', () => {
+    renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/Meals'] },
+    );
+    const btn = screen.getByTestId('search-top-btn');
+    // const inputSearch = screen.queryByTestId('search-input');
+
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+
+    userEvent.click(btn);
+
+    console.log(screen.queryByTestId('search-input'));
+    expect(screen.queryByTestId('search-input')).toBeInTheDocument();
+  });
+
+  test('Test if you go to the "/done-recipes" route', () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/done-recipes'] },
+    );
+
+    expect(history.location.pathname).toBe('/done-recipes');
+  });
+
+  test('Test if you go to the "/favorite-recipes" route', () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/favorite-recipes'] },
+    );
+
+    expect(history.location.pathname).toBe('/favorite-recipes');
+  });
 });
