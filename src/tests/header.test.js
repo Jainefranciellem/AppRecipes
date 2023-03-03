@@ -2,8 +2,9 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../context/helpers/renderWith';
 import App from '../App';
-import Meals from '../Pages/Meals';
 import RecipesProvider from '../context/RecipesProvider';
+
+// More than 45% of header tests
 
 describe('testando Header', () => {
   it('testa se o Header é renderizado corretamente', () => {
