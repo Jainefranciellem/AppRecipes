@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 function Header() {
   const location = useLocation();
+  const history = useHistory();
   const [title, setTitle] = useState(''); // title of the page
   const [loadSearch, setLoadSearch] = useState(true); // responsible for controlling the rendering of the search icon
 
@@ -39,19 +40,33 @@ function Header() {
     controlsSearchRendering();
   }, []);
 
+  // Route change by clicking profile button
+  const handleClick = () => {
+    history.push('/profile');
+  };
+
   return (
     <div>
-      {loadSearch && (
+      <button
+        type="button"
+      >
+        {loadSearch && (
+          <img
+            src={ searchIcon }
+            alt="search-icon"
+            data-testid="search-top-btn"
+          />)}
+      </button>
+      <button
+        type="button"
+        onClick={ handleClick }
+      >
         <img
-          src={ searchIcon }
-          alt="search-icon"
-          data-testid="search-top-btn"
-        />)}
-      <img
-        src={ profileIcon }
-        alt="profile-icon"
-        data-testid="profile-top-btn"
-      />
+          src={ profileIcon }
+          alt="profile-icon"
+          data-testid="profile-top-btn"
+        />
+      </button>
       <h1
         data-testid="page-title"
       >
