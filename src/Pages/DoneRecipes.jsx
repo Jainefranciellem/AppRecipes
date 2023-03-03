@@ -1,12 +1,15 @@
 import React from 'react';
 import Header from '../components/Header';
-import SearchBar from '../components/SearchBar';
 
-export default function Home() {
+function DoneRecipes() {
   return (
     <div>
       <Header />
-      <SearchBar />
+      <h1 data-testid="page-title">
+        Done Recipes
+      </h1>
     </div>
   );
 }
+
+export default DoneRecipes;
