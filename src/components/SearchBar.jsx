@@ -5,12 +5,6 @@ export default function SearchBar() {
   return (
     <section>
       <div>
-        <input
-          data-testid="search-input"
-          type="text"
-          placeholder="Buscar Receita"
-          className="search-input"
-        />
         <div className="radioFilters">
           <div>
             <input

@@ -54,6 +54,7 @@ function Header() {
           name="input-search"
           id="inputSearch"
           data-testid="search-input"
+          placeholder="Buscar Receita"
         />)}
       <button
         type="button"
