@@ -5,6 +5,7 @@ import RecipesContext from '../context/RecipesContext';
 export default function RecipesList() {
   const { recipes, stateApi } = useContext(RecipesContext);
   const history = useHistory();
+  const maxNumber = 12;
 
   const verifyLength = () => {
     if (stateApi === 'food') {
@@ -21,14 +22,24 @@ export default function RecipesList() {
     <div>
       {
         stateApi === 'food'
-          ? recipes?.map((recipe) => (
-            <div key={ recipe.idMeal }>
-              <p>{recipe.strMeal}</p>
+          ? recipes?.slice(0, maxNumber).map((recipe, i) => (
+            <div data-testid={ `${i}-recipe-card` } key={ recipe.idMeal }>
+              <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
+              <img
+                data-testid={ `${i}-card-img` }
+                src={ recipe.strMealThumb }
+                alt={ recipe.strMeal }
+              />
             </div>
           ))
-          : recipes?.map((recipe) => (
-            <div key={ recipe.idDrink }>
-              <p>{recipe.strDrink}</p>
+          : recipes?.slice(0, maxNumber).map((recipe, i) => (
+            <div data-testid={ `${i}-recipe-card` } key={ recipe.idDrink }>
+              <p data-testid={ `${i}-card-name` }>{recipe.strDrink}</p>
+              <img
+                data-testid={ `${i}-card-img` }
+                src={ recipe.strDrinkThumb }
+                alt={ recipe.strDrink }
+              />
             </div>
           ))
       }
