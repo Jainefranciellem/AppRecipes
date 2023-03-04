@@ -33,11 +33,7 @@ export const fetchDrinksName = async (name) => {
 };
 
 export const fetchDrinksFirstLetter = async (FirstLetter) => {
-  if (FirstLetter.length > 1) {
-    global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  } else {
-    const FirstLetterApi = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${FirstLetter}`);
-    const data = await FirstLetterApi.json();
-    return data;
-  }
+  const FirstLetterApi = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${FirstLetter}`);
+  const data = await FirstLetterApi.json();
+  return data;
 };

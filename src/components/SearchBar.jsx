@@ -21,7 +21,7 @@ export default function SearchBar() {
     }
     if (resultApi === 'firstLetter') {
       const request = await fetchFoodFirstLetter(filters);
-      setRecipes(request.meals);
+      setRecipes(request);
     }
   };
 
@@ -36,8 +36,12 @@ export default function SearchBar() {
       setRecipes(request.drinks);
     }
     if (resultApi === 'firstLetter') {
-      const request = await fetchDrinksFirstLetter(filters);
-      setRecipes(request.drinks);
+      if (resultApi.length > 1) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      } else {
+        const request = await fetchDrinksFirstLetter(filters);
+        setRecipes(request.drinks);
+      }
     }
   };
 

@@ -11,7 +11,7 @@ function Header() {
   const [title, setTitle] = useState(''); // title of the page
   const [loadSearch, setLoadSearch] = useState(true); // responsible for controlling the rendering of the search icon
   const [hiddenSearchBtn, setHiddenSearchBtn] = useState(false);
-  const { setStateApi } = useContext(RecipesContext);
+  const { setStateApi, recipes } = useContext(RecipesContext);
 
   /**
    * responsible for capturing the patch and treating it to use as the title of the page

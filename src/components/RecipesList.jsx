@@ -7,12 +7,12 @@ export default function RecipesList() {
     <div>
       {
         stateApi === 'food'
-          ? recipes.map((recipe) => (
+          ? recipes?.map((recipe) => (
             <div key={ recipe.idMeal }>
               <p>{recipe.strMeal}</p>
             </div>
           ))
-          : recipes.map((recipe) => (
+          : recipes?.map((recipe) => (
             <div key={ recipe.idDrink }>
               <p>{recipe.strDrink}</p>
             </div>
