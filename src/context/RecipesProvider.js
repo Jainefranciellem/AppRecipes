@@ -8,10 +8,14 @@ export default function RecipesProvider({ children }) {
     password: '',
   });
 
+  const [stateApi, setStateApi] = useState('drinks');
+
   const value = useMemo(() => ({
     user,
     setUser,
-  }), [user]);
+    stateApi,
+    setStateApi,
+  }), [user, stateApi]);
   return (
     <RecipesContext.Provider value={ value }>
       { children }
