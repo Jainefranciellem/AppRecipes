@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import RecipesContext from '../context/RecipesContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
@@ -10,6 +11,7 @@ function Header() {
   const [title, setTitle] = useState(''); // title of the page
   const [loadSearch, setLoadSearch] = useState(true); // responsible for controlling the rendering of the search icon
   const [hiddenSearchBtn, setHiddenSearchBtn] = useState(false);
+  const { setStateApi } = useContext(RecipesContext);
 
   /**
    * responsible for capturing the patch and treating it to use as the title of the page
@@ -32,6 +34,10 @@ function Header() {
       return setLoadSearch(false);
     case '/favorite-recipes':
       return setLoadSearch(false);
+    case '/meals':
+      return setStateApi('food');
+    case '/drinks':
+      return setStateApi('drinks');
     default:
       setLoadSearch(true);
     }
