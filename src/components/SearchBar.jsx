@@ -13,11 +13,11 @@ export default function SearchBar() {
   const handleFood = async () => {
     if (resultApi === 'ingredient') {
       const request = await fetchFoodIngredients(filters);
-      setRecipes(request.meals);
+      setRecipes(request);
     }
     if (resultApi === 'name') {
       const request = await fetchFoodName(filters);
-      setRecipes(request.meals);
+      setRecipes(request);
     }
     if (resultApi === 'firstLetter') {
       const request = await fetchFoodFirstLetter(filters);
@@ -29,19 +29,15 @@ export default function SearchBar() {
     if (resultApi === 'ingredient') {
       const request = await fetchDrinksIngredients(filters);
       console.log(request);
-      setRecipes(request.drinks);
+      setRecipes(request);
     }
     if (resultApi === 'name') {
       const request = await fetchDrinksName(filters);
-      setRecipes(request.drinks);
+      setRecipes(request);
     }
     if (resultApi === 'firstLetter') {
-      if (resultApi.length > 1) {
-        global.alert('Sorry, we haven\'t found any recipes for these filters.');
-      } else {
-        const request = await fetchDrinksFirstLetter(filters);
-        setRecipes(request.drinks);
-      }
+      const request = await fetchDrinksFirstLetter(filters);
+      setRecipes(request);
     }
   };
 
