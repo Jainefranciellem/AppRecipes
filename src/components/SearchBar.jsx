@@ -1,22 +1,38 @@
-import React, { useState } from 'react';
-import { fetchApiFirstLetter,
-  fetchApiIngredients, fetchApiName } from '../services/FetchApi';
+import React, { useContext, useState } from 'react';
+import RecipesContext from '../context/RecipesContext';
+import { fetchDrinksFirstLetter, fetchDrinksIngredients,
+  fetchDrinksName, fetchFoodFirstLetter,
+  fetchFoodIngredients, fetchFoodName } from '../services/FetchApi';
 
 // Created componet Search Bar
 export default function SearchBar() {
   const [filters, setFilters] = useState('');
-  const [resultApi, setResultApi] = useState(false);
+  const [resultApi, setResultApi] = useState('');
+  const { stateApi } = useContext(RecipesContext);
 
-  const handleClick = async () => {
+  const handleFood = async () => {
     if (resultApi === 'ingredient') {
-      await fetchApiIngredients(filters);
+      await fetchFoodIngredients(filters);
     }
     if (resultApi === 'name') {
-      await fetchApiName(filters);
+      await fetchFoodName(filters);
     }
     if (resultApi === 'firstLetter') {
-      const request = await fetchApiFirstLetter(filters);
+      const request = await fetchFoodFirstLetter(filters);
       console.log(request);
+    }
+  };
+
+  const handleDrinks = async () => {
+    if (resultApi === 'ingredient') {
+      await fetchDrinksIngredients(filters);
+    }
+    if (resultApi === 'name') {
+      const request = await fetchDrinksName(filters);
+      console.log(request);
+    }
+    if (resultApi === 'firstLetter') {
+      await fetchDrinksFirstLetter(filters);
     }
   };
 
@@ -26,7 +42,7 @@ export default function SearchBar() {
         <input
           data-testid="search-input"
           type="text"
-          value={ filters }
+          value={ filters.filter }
           placeholder="Buscar Receita"
           className="search-input"
           onChange={ ({ target }) => setFilters(target.value) }
@@ -39,7 +55,6 @@ export default function SearchBar() {
               value="ingredient"
               data-testid="ingredient-search-radio"
               className="search-radio"
-              // checked={ setResultApi(true) }
               onChange={ ({ target }) => setResultApi(target.value) }
             />
             <label htmlFor="Ingredient">
@@ -53,7 +68,6 @@ export default function SearchBar() {
               value="name"
               data-testid="name-search-radio"
               className="search-radio"
-              // checked={ setResultApi(true) }
               onChange={ ({ target }) => setResultApi(target.value) }
             />
             <label htmlFor="Name">
@@ -67,7 +81,6 @@ export default function SearchBar() {
               value="firstLetter"
               data-testid="first-letter-search-radio"
               className="search-radio"
-              // checked={ setResultApi(true) }
               onChange={ ({ target }) => setResultApi(target.value) }
             />
             <label htmlFor="firstLetter">
@@ -79,7 +92,7 @@ export default function SearchBar() {
           type="button"
           data-testid="exec-search-btn"
           className="search-button"
-          onClick={ handleClick }
+          onClick={ stateApi === 'food' ? handleFood : handleDrinks }
         >
           Search
         </button>
