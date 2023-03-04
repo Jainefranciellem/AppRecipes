@@ -13,6 +13,7 @@ export default function SearchBar() {
   const handleFood = async () => {
     if (resultApi === 'ingredient') {
       const request = await fetchFoodIngredients(filters);
+      console.log(request);
       setRecipes(request);
     }
     if (resultApi === 'name') {
