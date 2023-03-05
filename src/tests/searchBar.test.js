@@ -59,7 +59,7 @@ describe('All tests from Search', () => {
       json: jest.fn().mockResolvedValue('teste'),
     });
   });
-  test('Testa interação dos elementos no componente SearchBar na url /meals', () => {
+  test('Tests interaction of elements in the SearchBar component at url /meals', () => {
     renderWithRouter(
       <RecipesProvider>
         <App />
@@ -75,13 +75,13 @@ describe('All tests from Search', () => {
     userEvent.click(radios[2]);
     userEvent.click(radios[1]);
     userEvent.click(searchBtn);
-    expect(fetch).toHaveBeenCalled();
     userEvent.type(searchInput, 'a');
     userEvent.click(radios[2]);
     userEvent.click(searchBtn);
+    expect(fetch).toHaveBeenCalled();
   });
 
-  test('Testa interação dos elementos no componente SearchBar na url /drinks', () => {
+  test('Tests interaction of elements in the SearchBar component at url /drinks', () => {
     renderWithRouter(
       <RecipesProvider>
         <App />

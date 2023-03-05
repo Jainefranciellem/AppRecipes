@@ -1,23 +1,36 @@
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import RecipesContext from '../context/RecipesContext';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import style from './Footer.module.css';
 
 function Footer() {
   const history = useHistory();
+  const { setStateApi } = useContext(RecipesContext);
+
+  const handleDrink = () => {
+    history.push('/drinks');
+    setStateApi('drinks');
+  };
+  const handleFood = () => {
+    history.push('/meals');
+    setStateApi('food');
+  };
+
   return (
     <footer className={ style.footer } data-testid="footer">
       <button
         data-testid="drinks-bottom-btn"
         src={ drinkIcon }
-        onClick={ () => history.push('/drinks') }
+        onClick={ handleDrink }
       >
         <img src={ drinkIcon } alt="drink-icon" />
       </button>
       <button
         data-testid="meals-bottom-btn"
         src={ mealIcon }
-        onClick={ () => history.push('/meals') }
+        onClick={ handleFood }
       >
         <img src={ mealIcon } alt="meal-icon" />
       </button>

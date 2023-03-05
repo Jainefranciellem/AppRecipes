@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
 export default function RecipesList() {
-  const { recipes, stateApi } = useContext(RecipesContext);
+  const { recipes, stateApi, setRecipes } = useContext(RecipesContext);
   const history = useHistory();
   const maxNumber = 12;
 
@@ -11,12 +11,34 @@ export default function RecipesList() {
     if (stateApi === 'food') {
       if (recipes?.length === 1) {
         history.push(`/meals/${recipes[0].idMeal}`);
+      } else if (recipes?.length === 0) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
-    } else if (recipes?.length === 1) {
-      history.push(`/drinks/${recipes[0].idDrink}`);
+    } else if (stateApi !== 'food') {
+      if (recipes?.length === 1) {
+        history.push(`/drinks/${recipes[0].idDrink}`);
+      } else if (recipes?.length === 0) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
     }
   };
   verifyLength();
+
+  useEffect(() => {
+    const fetchFoods = async () => {
+      if (stateApi === 'food') {
+        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+        const data = await response.json();
+        setRecipes(data.meals);
+      } else {
+        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+        const data = await response.json();
+        setRecipes(data.drinks);
+      }
+    };
+
+    fetchFoods();
+  }, [stateApi]);
 
   return (
     <div>

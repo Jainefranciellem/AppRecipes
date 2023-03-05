@@ -9,6 +9,7 @@ export default function SearchBar() {
   const [filters, setFilters] = useState('');
   const [resultApi, setResultApi] = useState('');
   const { stateApi, setRecipes } = useContext(RecipesContext);
+
   const handleFood = async () => {
     if (resultApi === 'ingredient') {
       const request = await fetchFoodIngredients(filters);
