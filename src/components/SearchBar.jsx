@@ -8,31 +8,36 @@ import { fetchDrinksFirstLetter, fetchDrinksIngredients,
 export default function SearchBar() {
   const [filters, setFilters] = useState('');
   const [resultApi, setResultApi] = useState('');
-  const { stateApi } = useContext(RecipesContext);
+  const { stateApi, setRecipes } = useContext(RecipesContext);
 
   const handleFood = async () => {
     if (resultApi === 'ingredient') {
-      await fetchFoodIngredients(filters);
+      const request = await fetchFoodIngredients(filters);
+      setRecipes(request);
     }
     if (resultApi === 'name') {
-      await fetchFoodName(filters);
+      const request = await fetchFoodName(filters);
+      setRecipes(request);
     }
     if (resultApi === 'firstLetter') {
       const request = await fetchFoodFirstLetter(filters);
-      console.log(request);
+      setRecipes(request);
     }
   };
 
   const handleDrinks = async () => {
     if (resultApi === 'ingredient') {
-      await fetchDrinksIngredients(filters);
+      const request = await fetchDrinksIngredients(filters);
+      console.log(request);
+      setRecipes(request);
     }
     if (resultApi === 'name') {
       const request = await fetchDrinksName(filters);
-      console.log(request);
+      setRecipes(request);
     }
     if (resultApi === 'firstLetter') {
-      await fetchDrinksFirstLetter(filters);
+      const request = await fetchDrinksFirstLetter(filters);
+      setRecipes(request);
     }
   };
 
