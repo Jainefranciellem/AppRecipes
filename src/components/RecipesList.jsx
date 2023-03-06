@@ -11,15 +11,9 @@ export default function RecipesList() {
     if (stateApi === 'food') {
       if (recipes?.length === 1) {
         history.push(`/meals/${recipes[0].idMeal}`);
-      } else if (recipes?.length === 0) {
-        global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
-    } else if (stateApi !== 'food') {
-      if (recipes?.length === 1) {
-        history.push(`/drinks/${recipes[0].idDrink}`);
-      } else if (recipes?.length === 0) {
-        global.alert('Sorry, we haven\'t found any recipes for these filters.');
-      }
+    } else if (recipes?.length === 1) {
+      history.push(`/drinks/${recipes[0].idDrink}`);
     }
   };
   verifyLength();
@@ -45,7 +39,7 @@ export default function RecipesList() {
       {
         stateApi === 'food'
           ? recipes?.slice(0, maxNumber).map((recipe, i) => (
-            <div data-testid={ `${i}-recipe-card` } key={ recipe.idMeal }>
+            <div data-testid={ `${i}-recipe-card` } key={ `recipe.idMeal ${i}` }>
               <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
               <img
                 data-testid={ `${i}-card-img` }
@@ -55,7 +49,7 @@ export default function RecipesList() {
             </div>
           ))
           : recipes?.slice(0, maxNumber).map((recipe, i) => (
-            <div data-testid={ `${i}-recipe-card` } key={ recipe.idDrink }>
+            <div data-testid={ `${i}-recipe-card` } key={ `recipe.idDrink ${i}` }>
               <p data-testid={ `${i}-card-name` }>{recipe.strDrink}</p>
               <img
                 data-testid={ `${i}-card-img` }

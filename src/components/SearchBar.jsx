@@ -9,35 +9,53 @@ export default function SearchBar() {
   const [filters, setFilters] = useState('');
   const [resultApi, setResultApi] = useState('');
   const { stateApi, setRecipes } = useContext(RecipesContext);
+  const msgAlert = 'Sorry, we haven\'t found any recipes for these filters.';
 
   const handleFood = async () => {
     if (resultApi === 'ingredient') {
       const request = await fetchFoodIngredients(filters);
       setRecipes(request);
+      if (await request === null) {
+        return global.alert(msgAlert);
+      }
     }
     if (resultApi === 'name') {
       const request = await fetchFoodName(filters);
       setRecipes(request);
+      if (await request === null) {
+        return global.alert(msgAlert);
+      }
     }
     if (resultApi === 'firstLetter') {
       const request = await fetchFoodFirstLetter(filters);
       setRecipes(request);
+      if (await request === null) {
+        return global.alert(msgAlert);
+      }
     }
   };
 
   const handleDrinks = async () => {
     if (resultApi === 'ingredient') {
       const request = await fetchDrinksIngredients(filters);
-      console.log(request);
       setRecipes(request);
+      if (await request === null) {
+        return global.alert(msgAlert);
+      }
     }
     if (resultApi === 'name') {
       const request = await fetchDrinksName(filters);
       setRecipes(request);
+      if (await request === null) {
+        return global.alert(msgAlert);
+      }
     }
     if (resultApi === 'firstLetter') {
       const request = await fetchDrinksFirstLetter(filters);
       setRecipes(request);
+      if (await request === null) {
+        return global.alert(msgAlert);
+      }
     }
   };
 

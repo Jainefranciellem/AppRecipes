@@ -29,7 +29,7 @@ function Recipes() {
 
   return (
     <div>
-      { category[location.pathname.replace('/', '')]?.filter((el, idx) => idx <= limits)
+      { category[location.pathname.replace('/', '')]?.filter((el, idx) => idx < limits)
         .map((element) => (
           <button
             type="button"

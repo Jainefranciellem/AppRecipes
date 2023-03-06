@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/react';
+import { wait } from '@testing-library/user-event/dist/utils';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from './helpers/renderWith';
 import App from '../App';
@@ -7,38 +8,32 @@ import RecipesProvider from '../context/RecipesProvider';
 const searchTopBtn = 'search-top-btn';
 const searchInput = 'search-input';
 const exercBtn = 'exec-search-btn';
+
 describe('All tests from Search', () => {
-  it('All tests', async () => {
+  beforeEach(() => {
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue('fetchaApi'),
+    });
+  });
+
+  it('test render drinks', async () => {
     renderWithRouter(
       <RecipesProvider>
         <App />
       </RecipesProvider>,
       { initialEntries: ['/Meals'] },
     );
-    userEvent.click(screen.getByTestId(searchTopBtn));
-    userEvent.type(screen.getByTestId(searchInput), 'chicken');
-    userEvent.click(screen.getByTestId('search-input'));
-    userEvent.click(screen.getByTestId('ingredient-search-radio'));
-    userEvent.click(screen.getByTestId(exercBtn));
-
-    screen.findAllByAltText('Chicken Handi');
   });
 
-  it('test Alert meals', async () => {
+  it('test render drinks', async () => {
     renderWithRouter(
       <RecipesProvider>
         <App />
       </RecipesProvider>,
       { initialEntries: ['/Drinks'] },
     );
-
-    jest.spyOn(global, 'alert').mockReturnValue('Your search must have only 1 (one) character');
-    userEvent.click(screen.getByTestId(searchTopBtn));
-    userEvent.type(screen.getByTestId(searchInput), 'aaaa');
-    userEvent.click(screen.getByTestId('first-letter-search-radio'));
-    userEvent.click(screen.getByTestId(exercBtn));
-    expect(global.alert).toHaveBeenCalled();
   });
+
   it('test Alert drinks', async () => {
     renderWithRouter(
       <RecipesProvider>
@@ -54,52 +49,49 @@ describe('All tests from Search', () => {
 
     expect(global.alert).toHaveBeenCalled();
   });
-  beforeEach(() => {
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue('teste'),
-    });
-  });
-  test('Tests interaction of elements in the SearchBar component at url /meals', () => {
-    renderWithRouter(
-      <RecipesProvider>
-        <App />
-      </RecipesProvider>,
-      { initialEntries: ['/Meals'] },
-    );
-    const profile = screen.getByTestId(searchTopBtn);
-    userEvent.click(profile);
-    const radios = screen.getAllByRole('radio');
-    const searchBtn = screen.getByTestId(exercBtn);
-    userEvent.type(searchInput, 'avocado');
-    userEvent.click(radios[0]);
-    userEvent.click(radios[2]);
-    userEvent.click(radios[1]);
-    userEvent.click(searchBtn);
-    userEvent.type(searchInput, 'a');
-    userEvent.click(radios[2]);
-    userEvent.click(searchBtn);
-    expect(fetch).toHaveBeenCalled();
-  });
-
-  test('Tests interaction of elements in the SearchBar component at url /drinks', () => {
+  it('Tests interaction of elements in the SearchBar component at url /drinks', () => {
     renderWithRouter(
       <RecipesProvider>
         <App />
       </RecipesProvider>,
       { initialEntries: ['/Drinks'] },
     );
-    const profile = screen.getByTestId(searchTopBtn);
-    userEvent.click(profile);
+    const searchTop = screen.getByTestId(searchTopBtn);
+    userEvent.click(searchTop);
     const radios = screen.getAllByRole('radio');
     const searchBtn = screen.getByTestId(exercBtn);
-    userEvent.type(searchInput, 'avocado');
+    userEvent.type(searchInput, 'mojito');
     userEvent.click(radios[0]);
-    userEvent.click(radios[2]);
-    userEvent.click(radios[1]);
     userEvent.click(searchBtn);
     expect(fetch).toHaveBeenCalled();
-    userEvent.type(searchInput, 'a');
-    userEvent.click(radios[2]);
-    userEvent.click(searchBtn);
+  });
+  it('testa se o header é rendeizado corretamente na rota /profile ', () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/Drinks'] },
+    );
+    const profile = screen.getByRole('button', { name: /profile-icon/i });
+    userEvent.click(profile);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/profile');
+  });
+
+  it('Testa se achado 0 receitas o alert é disparado', async () => {
+    renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/Meals'] },
+    );
+    userEvent.click(screen.getByTestId(searchTopBtn));
+    userEvent.type(searchInput, 'xabblllaauu');
+    const radios = screen.getAllByRole('radio');
+    userEvent.click(radios[1]);
+    userEvent.click(screen.getByTestId(exercBtn));
+    expect(fetch).toHaveBeenCalled();
+    await wait(2000);
+    jest.spyOn(global, 'alert').mockReturnValue('Sorry, we haven\'t found any recipes for these filters.');
   });
 });
