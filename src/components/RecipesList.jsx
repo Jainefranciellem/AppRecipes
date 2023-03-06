@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
 export default function RecipesList() {
-  const { recipes, stateApi, setRecipes } = useContext(RecipesContext);
+  const { recipes, stateApi, setRecipes, recipesFiltered } = useContext(RecipesContext);
   const history = useHistory();
   const maxNumber = 12;
 
@@ -44,27 +44,30 @@ export default function RecipesList() {
     <div>
       {
         stateApi === 'food'
-          ? recipes?.slice(0, maxNumber).map((recipe, i) => (
-            <div data-testid={ `${i}-recipe-card` } key={ recipe.idMeal }>
-              <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
-              <img
-                data-testid={ `${i}-card-img` }
-                src={ recipe.strMealThumb }
-                alt={ recipe.strMeal }
-              />
-            </div>
-          ))
-          : recipes?.slice(0, maxNumber).map((recipe, i) => (
-            <div data-testid={ `${i}-recipe-card` } key={ recipe.idDrink }>
-              <p data-testid={ `${i}-card-name` }>{recipe.strDrink}</p>
-              <img
-                data-testid={ `${i}-card-img` }
-                src={ recipe.strDrinkThumb }
-                alt={ recipe.strDrink }
-              />
-            </div>
-          ))
+           && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
+             ?.slice(0, maxNumber).map((recipe, i) => (
+               <div data-testid={ `${i}-recipe-card` } key={ recipe.idMeal }>
+                 <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
+                 <img
+                   data-testid={ `${i}-card-img` }
+                   src={ recipe.strMealThumb }
+                   alt={ recipe.strMeal }
+                 />
+               </div>
+             ))
       }
+      { stateApi === 'drinks'
+          && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
+            ?.slice(0, maxNumber).map((recipe, i) => (
+              <div data-testid={ `${i}-recipe-card` } key={ recipe.idDrink }>
+                <p data-testid={ `${i}-card-name` }>{recipe.strDrink}</p>
+                <img
+                  data-testid={ `${i}-card-img` }
+                  src={ recipe.strDrinkThumb }
+                  alt={ recipe.strDrink }
+                />
+              </div>
+            ))}
     </div>
   );
 }
