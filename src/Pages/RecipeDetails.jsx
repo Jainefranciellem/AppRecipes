@@ -15,13 +15,15 @@ export default function RecipeDetails() {
 
   useEffect(() => {
     const fetchById = async () => {
-      const recipeFood = await fetchIdFood(id);
-      const { meals } = recipeFood;
-      setTypeRecipe(meals);
-      const recipeDrink = await fetchIdDrinks(id);
       if (typeRecipes === 'drinks') {
+        const recipeDrink = await fetchIdDrinks(id);
         const { drinks } = recipeDrink;
         setTypeRecipe(drinks);
+      } else {
+        console.log(pathname);
+        const recipeFood = await fetchIdFood(id);
+        const { meals } = recipeFood;
+        setTypeRecipe(meals);
       }
     };
     fetchById();
@@ -67,7 +69,7 @@ export default function RecipeDetails() {
           data-testid="recipe-category"
         >
           { typeRecipes === 'meals' ? typeRecipe[0].strCategory
-            : typeRecipe[0].strCategory }
+            : typeRecipe[0].strAlcoholic }
         </h4>
         { ingredient && ingredient?.map((ingredientRecipe, i) => (
           <div
@@ -81,15 +83,17 @@ export default function RecipeDetails() {
           { typeRecipes === 'meals' ? typeRecipe[0].strInstructions
             : typeRecipe[0].strInstructions }
         </p>
-        {/* <iframe
-          data-testid="video"
-          title="Video"
-          frameBorder="0"
-          src={ typeRecipes === 'meals' && typeRecipe[0].strYoutube }
-          allowFullScreen
-        >
-          Video
-        </iframe> */}
+        { typeRecipes === 'meals' && (
+          <iframe
+            data-testid="video"
+            title="Video"
+            frameBorder="0"
+            src={ typeRecipe[0].strYoutube }
+            allowFullScreen
+          >
+            Video
+          </iframe>
+        )}
       </div>
     );
   }
