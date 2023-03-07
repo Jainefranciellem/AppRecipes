@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import RecipesContext from '../context/RecipesContext';
 import { fetchIdDrinks, fetchIdFood } from '../services/FetchApi';
 
 export default function RecipeDetails() {
+  const { recipes, setRecipes, stateApi } = useContext(RecipesContext);
   const [typeRecipe, setTypeRecipe] = useState(null);
   const [ingredient, setIngredient] = useState('');
   const [measure, setMeasure] = useState(null);
@@ -10,8 +12,6 @@ export default function RecipeDetails() {
   const params = pathname.slice(1).split('/');
   const typeRecipes = params[0];
   const id = params[1];
-  console.log(typeRecipe);
-  console.log(typeRecipes);
 
   useEffect(() => {
     const fetchById = async () => {
@@ -20,7 +20,6 @@ export default function RecipeDetails() {
         const { drinks } = recipeDrink;
         setTypeRecipe(drinks);
       } else {
-        console.log(pathname);
         const recipeFood = await fetchIdFood(id);
         const { meals } = recipeFood;
         setTypeRecipe(meals);
@@ -49,6 +48,22 @@ export default function RecipeDetails() {
       setMeasure(measures);
     }
   }, [typeRecipe]);
+
+  useEffect(() => {
+    const fetchFoods = async () => {
+      if (typeRecipes === 'meals') {
+        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+        const data = await response.json();
+        setRecipes(data.meals);
+      } else {
+        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+        const data = await response.json();
+        setRecipes(data.drinks);
+      }
+    };
+
+    fetchFoods();
+  }, [stateApi]);
 
   if (typeRecipe) {
     return (
