@@ -11,15 +11,9 @@ export default function RecipesList() {
     if (stateApi === 'food') {
       if (recipes?.length === 1) {
         history.push(`/meals/${recipes[0].idMeal}`);
-      } else if (recipes?.length === 0) {
-        global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
-    } else if (stateApi !== 'food') {
-      if (recipes?.length === 1) {
-        history.push(`/drinks/${recipes[0].idDrink}`);
-      } else if (recipes?.length === 0) {
-        global.alert('Sorry, we haven\'t found any recipes for these filters.');
-      }
+    } else if (recipes?.length === 1) {
+      history.push(`/drinks/${recipes[0].idDrink}`);
     }
   };
   verifyLength();
@@ -45,21 +39,21 @@ export default function RecipesList() {
 
       {
         stateApi === 'food'
-        && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
-          ?.slice(0, maxNumber).map((recipe, i) => (
-            <Link
-              to={ `/meals/${recipe.idMeal}` }
-              data-testid={ `${i}-recipe-card` }
-              key={ `${recipe.idMeal} ${i}` }
-            >
-              <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
-              <img
-                data-testid={ `${i}-card-img` }
-                src={ recipe.strMealThumb }
-                alt={ recipe.strMeal }
-              />
-            </Link>
-          ))
+          && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
+            ?.slice(0, maxNumber).map((recipe, i) => (
+              <Link
+                to={ `/meals/${recipe.idMeal}` }
+                data-testid={ `${i}-recipe-card` }
+                key={ `${recipe.idMeal} ${i}` }
+              >
+                <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
+                <img
+                  data-testid={ `${i}-card-img` }
+                  src={ recipe.strMealThumb }
+                  alt={ recipe.strMeal }
+                />
+              </Link>
+            ))
       }
       { stateApi === 'drinks'
           && (recipesFiltered.length > 0 ? recipesFiltered : recipes)

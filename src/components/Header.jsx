@@ -4,6 +4,7 @@ import RecipesContext from '../context/RecipesContext';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import '../style/Header.css';
 
 function Header() {
   const location = useLocation();
@@ -54,36 +55,38 @@ function Header() {
   };
 
   return (
-    <div>
-      {hiddenSearchBtn && (
-        <SearchBar />)}
-      <button
-        type="button"
-        onClick={ () => setHiddenSearchBtn(!hiddenSearchBtn) }
-      >
-        {loadSearch && (
+    <>
+      <div className="header">
+        {hiddenSearchBtn && (
+          <SearchBar />)}
+        <button
+          type="button"
+          onClick={ () => setHiddenSearchBtn(!hiddenSearchBtn) }
+        >
+          {loadSearch && (
+            <img
+              src={ searchIcon }
+              alt="search-icon"
+              data-testid="search-top-btn"
+            />)}
+        </button>
+        <button
+          type="button"
+          onClick={ handleClick }
+        >
           <img
-            src={ searchIcon }
-            alt="search-icon"
-            data-testid="search-top-btn"
-          />)}
-      </button>
-      <button
-        type="button"
-        onClick={ handleClick }
-      >
-        <img
-          src={ profileIcon }
-          alt="profile-icon"
-          data-testid="profile-top-btn"
-        />
-      </button>
+            src={ profileIcon }
+            alt="profile-icon"
+            data-testid="profile-top-btn"
+          />
+        </button>
+      </div>
       <h1
         data-testid="page-title"
       >
         { title }
       </h1>
-    </div>
+    </>
   );
 }
 
