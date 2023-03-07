@@ -40,20 +40,20 @@ export default function RecipesList() {
       {
         stateApi === 'food'
           && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
-          ?.slice(0, maxNumber).map((recipe, i) => (
-            <Link
-              to={ `/meals/${recipe.idMeal}` }
-              data-testid={ `${i}-recipe-card` }
-              key={ `${recipe.idMeal} ${i}` }
-            >
-              <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
-              <img
-                data-testid={ `${i}-card-img` }
-                src={ recipe.strMealThumb }
-                alt={ recipe.strMeal }
-              />
-            </Link>
-          ))
+            ?.slice(0, maxNumber).map((recipe, i) => (
+              <Link
+                to={ `/meals/${recipe.idMeal}` }
+                data-testid={ `${i}-recipe-card` }
+                key={ `${recipe.idMeal} ${i}` }
+              >
+                <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
+                <img
+                  data-testid={ `${i}-card-img` }
+                  src={ recipe.strMealThumb }
+                  alt={ recipe.strMeal }
+                />
+              </Link>
+            ))
       }
       { stateApi === 'drinks'
           && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
