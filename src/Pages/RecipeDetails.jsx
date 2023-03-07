@@ -4,7 +4,7 @@ import RecipesContext from '../context/RecipesContext';
 import { fetchIdDrinks, fetchIdFood } from '../services/FetchApi';
 
 export default function RecipeDetails() {
-  const { recipes, setRecipes, stateApi } = useContext(RecipesContext);
+  const { setRecipes, stateApi } = useContext(RecipesContext);
   const [typeRecipe, setTypeRecipe] = useState(null);
   const [ingredient, setIngredient] = useState('');
   const [measure, setMeasure] = useState(null);
