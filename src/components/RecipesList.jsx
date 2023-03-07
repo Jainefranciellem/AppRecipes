@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 
 export default function RecipesList() {
@@ -42,31 +42,40 @@ export default function RecipesList() {
 
   return (
     <div>
+
       {
         stateApi === 'food'
-           && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
-             ?.slice(0, maxNumber).map((recipe, i) => (
-               <div data-testid={ `${i}-recipe-card` } key={ recipe.idMeal }>
-                 <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
-                 <img
-                   data-testid={ `${i}-card-img` }
-                   src={ recipe.strMealThumb }
-                   alt={ recipe.strMeal }
-                 />
-               </div>
-             ))
+        && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
+          ?.slice(0, maxNumber).map((recipe, i) => (
+            <Link
+              to={ `/meals/${recipe.idMeal}` }
+              data-testid={ `${i}-recipe-card` }
+              key={ `${recipe.idMeal} ${i}` }
+            >
+              <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
+              <img
+                data-testid={ `${i}-card-img` }
+                src={ recipe.strMealThumb }
+                alt={ recipe.strMeal }
+              />
+            </Link>
+          ))
       }
       { stateApi === 'drinks'
           && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
             ?.slice(0, maxNumber).map((recipe, i) => (
-              <div data-testid={ `${i}-recipe-card` } key={ recipe.idDrink }>
+              <Link
+                to={ `/drinks/${recipe.idDrink}` }
+                data-testid={ `${i}-recipe-card` }
+                key={ `${recipe.idDrink} ${i}` }
+              >
                 <p data-testid={ `${i}-card-name` }>{recipe.strDrink}</p>
                 <img
                   data-testid={ `${i}-card-img` }
                   src={ recipe.strDrinkThumb }
                   alt={ recipe.strDrink }
                 />
-              </div>
+              </Link>
             ))}
     </div>
   );

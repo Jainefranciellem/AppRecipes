@@ -5,7 +5,7 @@ import RecipesContext from '../context/RecipesContext';
 const limits = 5;
 
 function Recipes() {
-  const { setRecipesFiltered } = useContext(RecipesContext);
+  const { recipesFiltered, setRecipesFiltered } = useContext(RecipesContext);
 
   const location = useLocation();
   const [category, setCategory] = useState([]);
@@ -34,12 +34,14 @@ function Recipes() {
   const applyFilterMeals = async (name) => {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${name}`);
     const data = await response.json();
+    if (recipesFiltered.length > 0) return setRecipesFiltered([]);
     setRecipesFiltered(data.meals);
   };
 
   const applyFilterDrinks = async (name) => {
     const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${name}`);
     const data = await response.json();
+    if (recipesFiltered.length > 0) return setRecipesFiltered([]);
     setRecipesFiltered(data.drinks);
   };
 
