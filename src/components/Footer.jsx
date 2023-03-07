@@ -7,15 +7,17 @@ import style from './Footer.module.css';
 
 function Footer() {
   const history = useHistory();
-  const { setStateApi } = useContext(RecipesContext);
+  const { setStateApi, setRecipesFiltered } = useContext(RecipesContext);
 
   const handleDrink = () => {
     history.push('/drinks');
     setStateApi('drinks');
+    setRecipesFiltered([]);
   };
   const handleFood = () => {
     history.push('/meals');
     setStateApi('food');
+    setRecipesFiltered([]);
   };
 
   return (
