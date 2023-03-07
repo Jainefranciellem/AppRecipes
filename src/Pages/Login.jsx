@@ -2,6 +2,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import '../style/Login.css';
+import logo from '../style/img/logo Recipes App.svg';
+import tomates from '../style/img/tomate.svg';
 
 export default function Login() {
   const [isValid, setIsValid] = useState(true);
@@ -25,29 +28,39 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <input
-        data-testid="email-input"
-        type="email"
-        id="email"
-        placeholder="email"
-        onChange={ ({ target }) => setUser({ ...user, email: target.value }) }
-      />
-      <input
-        data-testid="password-input"
-        type="password"
-        id="password"
-        placeholder="password"
-        onChange={ ({ target }) => setUser({ ...user, password: target.value }) }
-      />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ isValid }
-        onClick={ handleClick }
-      >
-        Enter
-      </button>
-    </div>
+    <>
+      <div className="container">
+        <img className="logo" src={ logo } alt="logo" />
+        <img className="tomates" src={ tomates } alt="tomates" />
+      </div>
+      <section className="sectionLogin">
+        <h1>Login</h1>
+        <input
+          data-testid="email-input"
+          type="email"
+          id="email"
+          className="email"
+          placeholder="email"
+          onChange={ ({ target }) => setUser({ ...user, email: target.value }) }
+        />
+        <input
+          data-testid="password-input"
+          type="password"
+          id="password"
+          className="password"
+          placeholder="password"
+          onChange={ ({ target }) => setUser({ ...user, password: target.value }) }
+        />
+        <button
+          type="button"
+          className="buttonLogin"
+          data-testid="login-submit-btn"
+          disabled={ isValid }
+          onClick={ handleClick }
+        >
+          ENTER
+        </button>
+      </section>
+    </>
   );
 }

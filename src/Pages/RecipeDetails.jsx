@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import RecipesContext from '../context/RecipesContext';
 import { fetchIdDrinks, fetchIdFood } from '../services/FetchApi';
+import '../style/Details.css';
 
 export default function RecipeDetails() {
-  const { setRecipes, stateApi } = useContext(RecipesContext);
+  const [recomendation, setRecomendation] = useState(null);
   const [typeRecipe, setTypeRecipe] = useState(null);
   const [ingredient, setIngredient] = useState('');
   const [measure, setMeasure] = useState(null);
@@ -12,6 +12,7 @@ export default function RecipeDetails() {
   const params = pathname.slice(1).split('/');
   const typeRecipes = params[0];
   const id = params[1];
+  const maxNumber = 6;
 
   useEffect(() => {
     const fetchById = async () => {
@@ -25,6 +26,20 @@ export default function RecipeDetails() {
         setTypeRecipe(meals);
       }
     };
+    const fetchFoods = async () => {
+      if (typeRecipes === 'meals') {
+        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+        const data = await response.json();
+        const { drinks } = data;
+        setRecomendation(drinks);
+      } else {
+        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+        const data = await response.json();
+        const { meals } = data;
+        setRecomendation(meals);
+      }
+    };
+    fetchFoods();
     fetchById();
   }, []);
 
@@ -48,22 +63,6 @@ export default function RecipeDetails() {
       setMeasure(measures);
     }
   }, [typeRecipe]);
-
-  useEffect(() => {
-    const fetchFoods = async () => {
-      if (typeRecipes === 'meals') {
-        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-        const data = await response.json();
-        setRecipes(data.meals);
-      } else {
-        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-        const data = await response.json();
-        setRecipes(data.drinks);
-      }
-    };
-
-    fetchFoods();
-  }, [stateApi]);
 
   if (typeRecipe) {
     return (
@@ -109,6 +108,35 @@ export default function RecipeDetails() {
             Video
           </iframe>
         )}
+        <div className="divRecomendation">
+          {
+            recomendation && (
+              typeRecipes === 'drinks'
+                ? recomendation?.slice(0, maxNumber).map((recipe, i) => (
+                  <div
+                    data-testid={ `${i}-recommendation-card` }
+                    key={ `recipe.idMeal ${i}` }
+                  >
+                    <p data-testid={ `${i}-recommendation-title` }>{ recipe.strMeal }</p>
+                  </div>
+                ))
+                : recomendation?.slice(0, maxNumber).map((recipe, i) => (
+                  <div
+                    data-testid={ `${i}-recommendation-card` }
+                    key={ `recipe.idDrink ${i}` }
+                  >
+                    <p data-testid={ `${i}-recommendation-title` }>{recipe.strDrink}</p>
+                  </div>
+                ))
+            )
+          }
+        </div>
+        <button
+          data-testid="start-recipe-btn"
+          className="startBtn"
+        >
+          Start Recipe
+        </button>
       </div>
     );
   }

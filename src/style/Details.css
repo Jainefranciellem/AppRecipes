@@ -1,0 +1,18 @@
+.divRecomendation {
+  display: flex;
+  overflow-x: scroll;
+  width: 150px;
+}
+
+.divRecomendation div {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  width: 110px;
+}
+
+.startBtn {
+  bottom: 0;
+  position: fixed;
+}
