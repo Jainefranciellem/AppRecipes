@@ -4,9 +4,23 @@
     background: #fcdc36;
     display: flex;
     height: 60px;
-    justify-content: end;
-    left: 0;
-    top: 0;
+    justify-content: space-between;
     width: 100vw;
+  }
+
+  .logoHeader {
+    margin: 5px;
+    width: 100px;
+  }
+
+  .p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    gap: 10px;
+    width: 71.62px;
+    height: 13.39px;
+    color: #41197F;
   }
 }

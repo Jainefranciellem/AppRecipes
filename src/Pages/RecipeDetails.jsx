@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { fetchIdDrinks, fetchIdFood } from '../services/FetchApi';
 import '../style/Details.css';
+import ButtonDetails from '../components/ButtonDetails';
 
 export default function RecipeDetails() {
+  const [drink, setDrink] = useState({});
+  const [meal, setMeal] = useState({});
+  const history = useHistory();
   const [recomendation, setRecomendation] = useState(null);
   const [typeRecipe, setTypeRecipe] = useState(null);
   const [ingredient, setIngredient] = useState('');
   const [measure, setMeasure] = useState(null);
   const { pathname } = useLocation();
   const params = pathname.slice(1).split('/');
+  const { id } = useParams();
   const typeRecipes = params[0];
-  const id = params[1];
   const maxNumber = 6;
 
   useEffect(() => {
@@ -63,6 +67,35 @@ export default function RecipeDetails() {
       setMeasure(measures);
     }
   }, [typeRecipe]);
+
+  useEffect(() => {
+    if (localStorage.getItem('inProgressRecipes') !== null) {
+      const obj = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      setDrink(obj.drinks);
+      setMeal(obj.meals);
+    }
+  }, []);
+
+  useEffect(() => {
+    const obj = {
+      drinks: {
+        ...drink,
+      },
+      meals: {
+        ...meal,
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
+  }, [drink, meal]);
+
+  const startRecipe = () => {
+    if (typeRecipes === 'meals') {
+      setMeal({ ...meal, [id]: ingredient });
+    } else {
+      setDrink({ ...drink, [id]: ingredient });
+    }
+    history.push(`/${typeRecipes}/${id}/in-progress`);
+  };
 
   if (typeRecipe) {
     return (
@@ -131,12 +164,13 @@ export default function RecipeDetails() {
             )
           }
         </div>
-        <button
-          data-testid="start-recipe-btn"
-          className="startBtn"
-        >
-          Start Recipe
-        </button>
+        <ButtonDetails
+          startRecipe={ startRecipe }
+          meal={ meal }
+          drink={ drink }
+          typeRecipes={ typeRecipes }
+          id={ id }
+        />
       </div>
     );
   }

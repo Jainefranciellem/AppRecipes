@@ -9,15 +9,18 @@ export default function RecipesProvider({ children }) {
   });
   const [stateApi, setStateApi] = useState('');
   const [recipes, setRecipes] = useState([]);
+  const [handleStart, setHandleStart] = useState('');
 
   const value = useMemo(() => ({
+    handleStart,
+    setHandleStart,
     user,
     setUser,
     stateApi,
     setStateApi,
     recipes,
     setRecipes,
-  }), [user, stateApi, recipes]);
+  }), [user, stateApi, recipes, handleStart]);
   return (
     <RecipesContext.Provider value={ value }>
       { children }
