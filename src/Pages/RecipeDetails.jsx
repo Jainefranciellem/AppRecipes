@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { fetchIdDrinks, fetchIdFood } from '../services/FetchApi';
+import { fetchIdDrinks, fetchIdFood,
+  fetchFoodsDrink, fetchFoodsMeal } from '../services/FetchApi';
 import '../style/Details.css';
 import ButtonDetails from '../components/ButtonDetails';
 import ButtonFavorite from '../components/ButtonFavorite';
@@ -21,7 +22,6 @@ export default function RecipeDetails() {
   const { id } = useParams();
   const typeRecipes = params[0];
   const maxNumber = 6;
-  console.log(typeRecipe);
 
   useEffect(() => {
     const fetchById = async () => {
@@ -35,20 +35,16 @@ export default function RecipeDetails() {
         setTypeRecipe(meals);
       }
     };
-    const fetchFoods = async () => {
-      if (typeRecipes === 'meals') {
-        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-        const data = await response.json();
-        const { drinks } = data;
-        setRecomendation(drinks);
+    const fetchAllRecipes = async () => {
+      if (typeRecipes === 'drinks') {
+        const recipeFood = await fetchFoodsMeal();
+        setRecomendation(await recipeFood);
       } else {
-        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-        const data = await response.json();
-        const { meals } = data;
-        setRecomendation(meals);
+        const recipeDrink = await fetchFoodsDrink();
+        setRecomendation(recipeDrink);
       }
     };
-    fetchFoods();
+    fetchAllRecipes();
     fetchById();
   }, []);
 
@@ -99,9 +95,11 @@ export default function RecipeDetails() {
     } else {
       setDrink({ ...drink, [id]: ingredient });
     }
-    history.push(`/${typeRecipes}/${id}/in-progress`);
+    const duration = 3000;
+    setTimeout(() => {
+      history.push(`/${typeRecipes}/${id}/in-progress`);
+    }, duration);
   };
-
   if (typeRecipe) {
     return (
       <div>
