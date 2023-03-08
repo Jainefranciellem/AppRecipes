@@ -20,7 +20,6 @@ export default function ButtonFavorite({ typeRecipe, typeRecipes, id }) {
       : typeRecipe[0].strDrinkThumb,
   };
   const handleClick = () => {
-    const favoriteRecipes = favorite.some((recipe) => recipe.id === id);
     const newFavorites = [...favorite, obj];
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
     setFavorite(newFavorites);
