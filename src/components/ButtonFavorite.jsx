@@ -7,7 +7,6 @@ import '../style/RecipesDetails.css';
 export default function ButtonFavorite({ typeRecipe, typeRecipes, id }) {
   const [icon, setIcon] = useState(whiteHeart);
   const getLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) ?? [];
-  console.log(getLocalStorage);
   const [favorite, setFavorite] = useState(getLocalStorage);
   const obj = {
     id,
@@ -20,15 +19,20 @@ export default function ButtonFavorite({ typeRecipe, typeRecipes, id }) {
       : typeRecipe[0].strDrinkThumb,
   };
   const handleClick = () => {
-    const newFavorites = [...favorite, obj];
-    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
-    setFavorite(newFavorites);
+    const favoriteRecipes = favorite.some((recipe) => recipe.id === id);
+    if (favoriteRecipes) {
+      setFavorite(favorite.filter((recipe) => recipe.id !== id));
+    } else {
+      const newFavorites = [...favorite, obj];
+      setFavorite(newFavorites);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+    }
   };
   useEffect(() => {
     const favoriteRecipes = favorite.some((recipe) => recipe.id === id);
     setIcon(favoriteRecipes ? blackHeart : whiteHeart);
-    console.log(favoriteRecipes);
   }, [favorite]);
+
   return (
     <button
       className="buttonFavorite"
