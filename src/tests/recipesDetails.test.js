@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { wait } from '@testing-library/user-event/dist/utils';
-import userEvent from '@testing-library/user-event';
 import React from 'react';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { renderWithRouter } from './helpers/renderWith';
 import RecipesProvider from '../context/RecipesProvider';
@@ -11,7 +11,7 @@ const searchInput = 'search-input';
 const exercBtn = 'exec-search-btn';
 
 describe('test details page', () => {
-  it('Tests whether when searching for a specific recipe, the page navigates to that recipes details', async () => {
+  it('Tests whether when searching for a specific recipe, the page navigates to that recipes details in meals', async () => {
     const { history } = renderWithRouter(
       <RecipesProvider>
         <App />
@@ -31,6 +31,28 @@ describe('test details page', () => {
     screen.getByTestId('recipe-photo');
     screen.getByRole('heading', { name: /corba/i });
     screen.getByRole('heading', { name: /side/i });
+  });
+
+  it('Tests whether when searching for a specific recipe, the page navigates to that recipes details in drinks', async () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <App />
+      </RecipesProvider>,
+      { initialEntries: ['/drinks'] },
+    );
+
+    userEvent.click(screen.getByTestId(searchTopBtn));
+    userEvent.type(screen.getByTestId(searchInput), 'Mojito Extra');
+    const radios = screen.getAllByRole('radio');
+    userEvent.click(radios[1]);
+    userEvent.click(screen.getByTestId(exercBtn));
+
+    await wait(1500);
+    expect(history.location.pathname).toBe('/drinks/15841');
+    await wait(1500);
+    screen.getByTestId('recipe-photo');
+    screen.getByRole('heading', { name: /Mojito Extra/i });
+    screen.getByRole('heading', { name: /Alcoholic/i });
   });
 
   it('Tests the buttons of the Recipes component', async () => {

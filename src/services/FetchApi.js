@@ -23,7 +23,6 @@ export const fetchFoodFirstLetter = async (FirstLetter) => {
 export const fetchDrinksIngredients = async (ingredients) => {
   const ingredientApi = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredients}`);
   const data = await ingredientApi.json();
-  console.log(data.drinks);
   return data.drinks;
 };
 
