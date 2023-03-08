@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { fetchIdDrinks, fetchIdFood } from '../services/FetchApi';
 import '../style/Details.css';
 import ButtonDetails from '../components/ButtonDetails';
+import ButtonFavorite from '../components/ButtonFavorite';
+import ButtonShare from '../components/ButtonShare';
+import RecipesContext from '../context/RecipesContext';
 
 export default function RecipeDetails() {
   const [drink, setDrink] = useState({});
   const [meal, setMeal] = useState({});
+  const { alert } = useContext(RecipesContext);
   const history = useHistory();
   const [recomendation, setRecomendation] = useState(null);
   const [typeRecipe, setTypeRecipe] = useState(null);
@@ -171,6 +175,9 @@ export default function RecipeDetails() {
           typeRecipes={ typeRecipes }
           id={ id }
         />
+        <ButtonFavorite />
+        <ButtonShare pathname={ pathname } />
+        { alert && <p>Link copied!</p> }
       </div>
     );
   }

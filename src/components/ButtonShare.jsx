@@ -1,0 +1,28 @@
+import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import clipboardCopy from 'clipboard-copy';
+import RecipesContext from '../context/RecipesContext';
+import '../style/RecipesDetails.css';
+
+export default function BurronShare({ pathname }) {
+  const { setAlert } = useContext(RecipesContext);
+  const URL = `http://localhost:3000${pathname}`;
+
+  const handleClick = () => {
+    clipboardCopy(URL);
+    setAlert(true);
+  };
+  return (
+    <button
+      className="buttonShare"
+      data-testid="share-btn"
+      onClick={ handleClick }
+    >
+      Share
+    </button>
+  );
+}
+
+BurronShare.propTypes = {
+  pathname: PropTypes.string.isRequired,
+};
