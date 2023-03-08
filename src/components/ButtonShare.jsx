@@ -11,6 +11,10 @@ export default function BurronShare({ pathname }) {
   const handleClick = () => {
     clipboardCopy(URL);
     setAlert(true);
+    const duration = 3000;
+    setTimeout(() => {
+      setAlert(false);
+    }, duration);
   };
   return (
     <button

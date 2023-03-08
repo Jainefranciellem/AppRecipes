@@ -21,6 +21,7 @@ export default function RecipeDetails() {
   const { id } = useParams();
   const typeRecipes = params[0];
   const maxNumber = 6;
+  console.log(typeRecipe);
 
   useEffect(() => {
     const fetchById = async () => {
@@ -175,7 +176,11 @@ export default function RecipeDetails() {
           typeRecipes={ typeRecipes }
           id={ id }
         />
-        <ButtonFavorite />
+        <ButtonFavorite
+          typeRecipe={ typeRecipe }
+          typeRecipes={ typeRecipes }
+          id={ id }
+        />
         <ButtonShare pathname={ pathname } />
         { alert && <p>Link copied!</p> }
       </div>
