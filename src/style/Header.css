@@ -1,6 +1,6 @@
 @media screen and ( max-width : 600px ) {
 
-  .header {
+  /* .header {
     background: #fcdc36;
     display: flex;
     height: 60px;
@@ -22,5 +22,5 @@
     width: 71.62px;
     height: 13.39px;
     color: #41197F;
-  }
+  } */
 }
