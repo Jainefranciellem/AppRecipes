@@ -1,20 +1,22 @@
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* .tomates {
+.tomates {
   filter: drop-shadow(0 7px 15px rgba(68, 73, 85, 0.25));
   height: 200px;
   position: relative;
   top: 140px;
   width: 400px;
-} */
+}
 
 @media screen and ( max-width : 600px ) {
 
   .container {
+
+    position: relative;
     align-items: center;
     background: #41197f;
     background-size: cover;
@@ -26,16 +28,17 @@
 
   .logo {
     position: relative;
-    top: 60px;
+    top: 20px;
     width: 170px;
   }
 
   .tomates {
     filter: drop-shadow(0 7px 15px rgba(68, 73, 85, 0.25));
     height: 250px;
-    position: relative;
-    top: 80px;
-    width: 400px;
+    left: 0;
+    position: absolute;
+    top: -46%;
+    width: 450px;
   }
 
   .sectionLogin {
@@ -46,6 +49,7 @@
     flex-direction: column;
     height: 50vh;
     justify-content: center;
+    position: relative;
     width: 100vw;
   }
 
@@ -90,5 +94,4 @@
     height: 40px;
     width: 276px;
   }
-}
-
+} */

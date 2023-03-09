@@ -1,17 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { fetchIdDrinks, fetchIdFood } from '../services/FetchApi';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { fetchIdDrinks, fetchIdFood,
+  fetchFoodsDrink, fetchFoodsMeal } from '../services/FetchApi';
 import '../style/Details.css';
+import ButtonDetails from '../components/ButtonDetails';
+import ButtonFavorite from '../components/ButtonFavorite';
+import ButtonShare from '../components/ButtonShare';
+import RecipesContext from '../context/RecipesContext';
 
 export default function RecipeDetails() {
+  const [drink, setDrink] = useState({});
+  const [meal, setMeal] = useState({});
+  const { alert } = useContext(RecipesContext);
+  const history = useHistory();
   const [recomendation, setRecomendation] = useState(null);
   const [typeRecipe, setTypeRecipe] = useState(null);
   const [ingredient, setIngredient] = useState('');
   const [measure, setMeasure] = useState(null);
   const { pathname } = useLocation();
   const params = pathname.slice(1).split('/');
+  const { id } = useParams();
   const typeRecipes = params[0];
-  const id = params[1];
   const maxNumber = 6;
 
   useEffect(() => {
@@ -26,20 +35,16 @@ export default function RecipeDetails() {
         setTypeRecipe(meals);
       }
     };
-    const fetchFoods = async () => {
-      if (typeRecipes === 'meals') {
-        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-        const data = await response.json();
-        const { drinks } = data;
-        setRecomendation(drinks);
+    const fetchAllRecipes = async () => {
+      if (typeRecipes === 'drinks') {
+        const recipeFood = await fetchFoodsMeal();
+        setRecomendation(await recipeFood);
       } else {
-        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-        const data = await response.json();
-        const { meals } = data;
-        setRecomendation(meals);
+        const recipeDrink = await fetchFoodsDrink();
+        setRecomendation(recipeDrink);
       }
     };
-    fetchFoods();
+    fetchAllRecipes();
     fetchById();
   }, []);
 
@@ -64,6 +69,37 @@ export default function RecipeDetails() {
     }
   }, [typeRecipe]);
 
+  useEffect(() => {
+    if (localStorage.getItem('inProgressRecipes') !== null) {
+      const obj = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      setDrink(obj.drinks);
+      setMeal(obj.meals);
+    }
+  }, []);
+
+  useEffect(() => {
+    const obj = {
+      drinks: {
+        ...drink,
+      },
+      meals: {
+        ...meal,
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(obj));
+  }, [drink, meal]);
+
+  const startRecipe = () => {
+    if (typeRecipes === 'meals') {
+      setMeal({ ...meal, [id]: ingredient });
+    } else {
+      setDrink({ ...drink, [id]: ingredient });
+    }
+    const duration = 3000;
+    setTimeout(() => {
+      history.push(`/${typeRecipes}/${id}/in-progress`);
+    }, duration);
+  };
   if (typeRecipe) {
     return (
       <div>
@@ -131,12 +167,20 @@ export default function RecipeDetails() {
             )
           }
         </div>
-        <button
-          data-testid="start-recipe-btn"
-          className="startBtn"
-        >
-          Start Recipe
-        </button>
+        <ButtonDetails
+          startRecipe={ startRecipe }
+          meal={ meal }
+          drink={ drink }
+          typeRecipes={ typeRecipes }
+          id={ id }
+        />
+        <ButtonFavorite
+          typeRecipe={ typeRecipe }
+          typeRecipes={ typeRecipes }
+          id={ id }
+        />
+        <ButtonShare pathname={ pathname } />
+        { alert && <p>Link copied!</p> }
       </div>
     );
   }
