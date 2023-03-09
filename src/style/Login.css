@@ -1,8 +1,8 @@
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
 /* .tomates {
   filter: drop-shadow(0 7px 15px rgba(68, 73, 85, 0.25));
@@ -12,20 +12,21 @@
   width: 400px;
 } */
 
-@media screen and ( max-width : 600px ) {
+/* @media screen and ( max-width : 600px ) {
 
   .container {
+
     /* position: relative; */
-    align-items: center;
+    /* align-items: center;
     background: #41197f;
     background-size: cover;
     display: flex;
     flex-direction: column;
     height: 55vh;
     width: 100vw;
-  }
+  } */
 
-  .logo {
+  /* .logo {
     position: relative;
     top: 20px;
     width: 170px;
@@ -34,14 +35,13 @@
   .tomates {
     filter: drop-shadow(0 7px 15px rgba(68, 73, 85, 0.25));
     height: 250px;
+    left: 0;
     position: absolute;
     top: -46%;
-    left: 0;
     width: 450px;
   }
 
   .sectionLogin {
-    position: relative;
     align-items: center;
     background: white;
     background-size: cover;
@@ -49,6 +49,7 @@
     flex-direction: column;
     height: 50vh;
     justify-content: center;
+    position: relative;
     width: 100vw;
   }
 
@@ -92,6 +93,4 @@
     font-weight: 800;
     height: 40px;
     width: 276px;
-  }
-}
-
+  } */
