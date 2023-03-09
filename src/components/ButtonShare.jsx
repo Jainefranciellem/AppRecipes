@@ -4,7 +4,7 @@ import clipboardCopy from 'clipboard-copy';
 import RecipesContext from '../context/RecipesContext';
 import '../style/RecipesDetails.css';
 
-export default function BurronShare({ pathname }) {
+export default function ButtonShare({ pathname }) {
   const { setAlert } = useContext(RecipesContext);
   const URL = `http://localhost:3000${pathname}`;
 
@@ -27,6 +27,6 @@ export default function BurronShare({ pathname }) {
   );
 }
 
-BurronShare.propTypes = {
+ButtonShare.propTypes = {
   pathname: PropTypes.string.isRequired,
 };
