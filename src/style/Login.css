@@ -15,6 +15,7 @@
 @media screen and ( max-width : 600px ) {
 
   .container {
+    /* position: relative; */
     align-items: center;
     background: #41197f;
     background-size: cover;
@@ -26,19 +27,21 @@
 
   .logo {
     position: relative;
-    top: 60px;
+    top: 20px;
     width: 170px;
   }
 
   .tomates {
     filter: drop-shadow(0 7px 15px rgba(68, 73, 85, 0.25));
     height: 250px;
-    position: relative;
-    top: 80px;
-    width: 400px;
+    position: absolute;
+    top: -46%;
+    left: 0;
+    width: 450px;
   }
 
   .sectionLogin {
+    position: relative;
     align-items: center;
     background: white;
     background-size: cover;

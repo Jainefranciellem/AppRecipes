@@ -5,6 +5,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 import '../style/Header.css';
+import logo from '../style/img/Group 4.svg';
 
 function Header() {
   const location = useLocation();
@@ -57,29 +58,38 @@ function Header() {
   return (
     <>
       <div className="header">
+        <img className="logoHeader" src={ logo } alt="logo" />
+        <p className="p">
+          RECIPES
+          {' '}
+          <span>app</span>
+          {' '}
+        </p>
         {hiddenSearchBtn && (
           <SearchBar />)}
-        <button
-          type="button"
-          onClick={ () => setHiddenSearchBtn(!hiddenSearchBtn) }
-        >
-          {loadSearch && (
+        <div className="buttons">
+          <button
+            type="button"
+            onClick={ () => setHiddenSearchBtn(!hiddenSearchBtn) }
+          >
+            {loadSearch && (
+              <img
+                src={ searchIcon }
+                alt="search-icon"
+                data-testid="search-top-btn"
+              />)}
+          </button>
+          <button
+            type="button"
+            onClick={ handleClick }
+          >
             <img
-              src={ searchIcon }
-              alt="search-icon"
-              data-testid="search-top-btn"
-            />)}
-        </button>
-        <button
-          type="button"
-          onClick={ handleClick }
-        >
-          <img
-            src={ profileIcon }
-            alt="profile-icon"
-            data-testid="profile-top-btn"
-          />
-        </button>
+              src={ profileIcon }
+              alt="profile-icon"
+              data-testid="profile-top-btn"
+            />
+          </button>
+        </div>
       </div>
       <h1
         data-testid="page-title"

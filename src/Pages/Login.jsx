@@ -31,9 +31,9 @@ export default function Login() {
     <>
       <div className="container">
         <img className="logo" src={ logo } alt="logo" />
-        <img className="tomates" src={ tomates } alt="tomates" />
       </div>
       <section className="sectionLogin">
+        <img className="tomates" src={ tomates } alt="tomates" />
         <h1>Login</h1>
         <input
           data-testid="email-input"
