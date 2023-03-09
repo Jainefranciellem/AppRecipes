@@ -2,31 +2,31 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-} */
+}
 
-/* .tomates {
+.tomates {
   filter: drop-shadow(0 7px 15px rgba(68, 73, 85, 0.25));
   height: 200px;
   position: relative;
   top: 140px;
   width: 400px;
-} */
+}
 
-/* @media screen and ( max-width : 600px ) {
+@media screen and ( max-width : 600px ) {
 
   .container {
 
-    /* position: relative; */
-    /* align-items: center;
+    position: relative;
+    align-items: center;
     background: #41197f;
     background-size: cover;
     display: flex;
     flex-direction: column;
     height: 55vh;
     width: 100vw;
-  } */
+  }
 
-  /* .logo {
+  .logo {
     position: relative;
     top: 20px;
     width: 170px;
@@ -93,4 +93,5 @@
     font-weight: 800;
     height: 40px;
     width: 276px;
-  } */
+  }
+} */
