@@ -1,6 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import Dish from '../style/img/All.svg';
+import Dessert from '../style/img/dessert.svg';
+import Beef from '../style/img/beef.svg';
+import Chicken from '../style/img/chicken.svg';
+import Breakfast from '../style/img/breakfast.svg';
+import Goat from '../style/img/goat.svg';
+import '../style/Recipes.css';
 
 const limits = 5;
 
@@ -9,6 +16,7 @@ function Recipes() {
 
   const location = useLocation();
   const [category, setCategory] = useState([]);
+  const [arrayImg] = useState([Dessert, Beef, Chicken, Breakfast, Goat]);
 
   const categoryMeals = async () => {
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
@@ -51,22 +59,24 @@ function Recipes() {
   };
 
   return (
-    <div>
+    <div className="buttonsFilters">
       <button
+        className="allBtn"
         data-testid="All-category-filter"
         onClick={ () => setRecipesFiltered([]) }
       >
-        All
+        <img src={ Dish } className="Dish" alt="" />
       </button>
       { category[location.pathname.replace('/', '')]?.filter((_el, idx) => idx < limits)
-        .map((element) => (
+        .map((element, i) => (
           <button
+            className="filtersBtn"
             type="button"
             key={ element.strCategory }
             data-testid={ `${element.strCategory}-category-filter` }
             onClick={ () => filterSelect(element.strCategory) }
           >
-            { element.strCategory }
+            <img className="imgFilters" src={ arrayImg[i] } alt="" />
           </button>
         )) }
 

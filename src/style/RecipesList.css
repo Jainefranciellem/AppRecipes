@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.containerList{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.cardRecipe {
+  background-color: aqua;
+  margin: 10px;
+  width: 163.2px;
+  height: 170.12px;
+  background: #FFFFFF;
+  border: 0.517989px solid #B1B1B1;
+  border-radius: 5px;
+}
+
+.imgRecipe {
+  width: 163.35px;
+  height: 134.85px;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.nameRecipe {
+  text-transform: none;
+  text-decoration: none;
+  display: flex;
+  margin: 8px 20px;
+  justify-content: start;
+  align-items: center;
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 12px;
+  color: #1A1B1C;
+}
+
+.link {
+  text-decoration: none;
+}

@@ -3,6 +3,7 @@ import RecipesContext from '../context/RecipesContext';
 import { fetchDrinksFirstLetter, fetchDrinksIngredients,
   fetchDrinksName, fetchFoodFirstLetter,
   fetchFoodIngredients, fetchFoodName } from '../services/FetchApi';
+import '../style/SearchBar.css';
 
 // Created componet Search Bar
 export default function SearchBar() {
@@ -48,12 +49,12 @@ export default function SearchBar() {
 
   return (
     <section className="searchBar">
-      <div>
+      <div className="containerSearch">
         <input
           data-testid="search-input"
           type="text"
           value={ filters.filter }
-          placeholder="Buscar Receita"
+          placeholder="Search"
           className="search-input"
           onChange={ ({ target }) => setFilters(target.value) }
         />

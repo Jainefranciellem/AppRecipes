@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import '../style/RecipesList.css';
 
 export default function RecipesList() {
   const { recipes, stateApi, setRecipes, recipesFiltered } = useContext(RecipesContext);
@@ -35,23 +36,32 @@ export default function RecipesList() {
   }, [stateApi]);
 
   return (
-    <div>
+    <div className="containerList">
 
       {
         stateApi === 'food'
           && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
             ?.slice(0, maxNumber).map((recipe, i) => (
               <Link
+                className="link"
                 to={ `/meals/${recipe.idMeal}` }
                 data-testid={ `${i}-recipe-card` }
                 key={ `${recipe.idMeal} ${i}` }
               >
-                <p data-testid={ `${i}-card-name` }>{ recipe.strMeal }</p>
-                <img
-                  data-testid={ `${i}-card-img` }
-                  src={ recipe.strMealThumb }
-                  alt={ recipe.strMeal }
-                />
+                <div className="cardRecipe">
+                  <img
+                    className="imgRecipe"
+                    data-testid={ `${i}-card-img` }
+                    src={ recipe.strMealThumb }
+                    alt={ recipe.strMeal }
+                  />
+                  <p
+                    className="nameRecipe"
+                    data-testid={ `${i}-card-name` }
+                  >
+                    { recipe.strMeal }
+                  </p>
+                </div>
               </Link>
             ))
       }

@@ -1,0 +1,17 @@
+.filtersBtn, .allBtn {
+  background: transparent;
+  align-items: center;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonsFilters { 
+  display: flex;
+  justify-content: center;
+}
+
+.imgFilters, .Dish {
+  width: 60px;
+  margin: 2px;
+}

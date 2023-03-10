@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
-import profileIcon from '../images/profileIcon.svg';
-import searchIcon from '../images/searchIcon.svg';
+import profileIcon from '../style/img/icone-perfil.svg';
+import searchIcon from '../style/img/Vector.svg';
 import SearchBar from './SearchBar';
 import '../style/Header.css';
 import logo from '../style/img/Group 4.svg';
+import iconDish from '../style/img/icone-prato.svg';
 
 function Header() {
   const location = useLocation();
@@ -65,10 +66,9 @@ function Header() {
           <span>app</span>
           {' '}
         </p>
-        {hiddenSearchBtn && (
-          <SearchBar />)}
         <div className="buttons">
           <button
+            className="buttonHeader"
             type="button"
             onClick={ () => setHiddenSearchBtn(!hiddenSearchBtn) }
           >
@@ -82,6 +82,7 @@ function Header() {
           <button
             type="button"
             onClick={ handleClick }
+            className="buttonHeader"
           >
             <img
               src={ profileIcon }
@@ -91,11 +92,17 @@ function Header() {
           </button>
         </div>
       </div>
-      <h1
-        data-testid="page-title"
-      >
-        { title }
-      </h1>
+      <div className="containerHeader">
+        <img src={ iconDish } className="iconDish" alt="" />
+        <h1
+          className="mealsTitle"
+          data-testid="page-title"
+        >
+          { title }
+        </h1>
+        {hiddenSearchBtn && (
+          <SearchBar />)}
+      </div>
     </>
   );
 }
