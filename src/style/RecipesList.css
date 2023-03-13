@@ -11,10 +11,9 @@
 }
 
 .cardRecipe {
-  background-color: aqua;
   margin: 10px;
   width: 163.2px;
-  height: 170.12px;
+  height: 180.12px;
   background: #FFFFFF;
   border: 0.517989px solid #B1B1B1;
   border-radius: 5px;
@@ -27,10 +26,12 @@
 }
 
 .nameRecipe {
+  margin-left: 10px;
+  width: 143.35px;
+  height: 40px;
   text-transform: none;
   text-decoration: none;
   display: flex;
-  margin: 8px 20px;
   justify-content: start;
   align-items: center;
   text-align: center;
@@ -38,6 +39,7 @@
   font-size: 18px;
   line-height: 12px;
   color: #1A1B1C;
+  overflow: scroll;
 }
 
 .link {

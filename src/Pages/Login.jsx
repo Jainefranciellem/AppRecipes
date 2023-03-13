@@ -28,7 +28,7 @@ export default function Login() {
   };
 
   return (
-    <>
+    <div className="loginPage">
       <div className="container">
         <img className="logo" src={ logo } alt="logo" />
       </div>
@@ -39,6 +39,7 @@ export default function Login() {
           data-testid="email-input"
           type="email"
           id="email"
+          autoComplete="off"
           className="email"
           placeholder="email"
           onChange={ ({ target }) => setUser({ ...user, email: target.value }) }
@@ -61,6 +62,6 @@ export default function Login() {
           ENTER
         </button>
       </section>
-    </>
+    </div>
   );
 }

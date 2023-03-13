@@ -11,7 +11,7 @@
 
 .search-input {
   padding-left: 20px;
-  width: 337px;
+  width: 360px;
   height: 40px;
   background: #FFFFFF;
   border: 1px solid #B1B1B1;
@@ -30,6 +30,7 @@
 
 .search-radio {
   background: #FCC436;
+  margin: 5px;
 }
 
 .search-button {

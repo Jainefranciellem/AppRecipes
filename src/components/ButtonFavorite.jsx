@@ -1,7 +1,7 @@
 import PropTypes, { shape } from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import whiteHeart from '../images/whiteHeartIcon.svg';
-import blackHeart from '../images/blackHeartIcon.svg';
+import whiteHeart from '../style/img/favorit.svg';
+import blackHeart from '../style/img/likeFavorite.svg';
 import '../style/RecipesDetails.css';
 
 export default function ButtonFavorite({ typeRecipe, typeRecipes, id }) {

@@ -9,9 +9,11 @@
 .buttonsFilters { 
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .imgFilters, .Dish {
   width: 60px;
-  margin: 2px;
+  margin: 2.2px;
+  object-fit: cover;
 }

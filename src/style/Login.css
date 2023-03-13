@@ -1,14 +1,13 @@
 @media screen and ( max-width : 600px ) {
 
   .container {
-
     position: relative;
     align-items: center;
     background: #41197f;
     background-size: cover;
     display: flex;
     flex-direction: column;
-    height: 55vh;
+    height: 50%;
     width: 100vw;
   }
 
@@ -20,10 +19,10 @@
 
   .tomates {
     filter: drop-shadow(0 7px 15px rgba(68, 73, 85, 0.25));
-    height: 250px;
+    height: 300px;
     left: 0;
     position: absolute;
-    top: -46%;
+    top: -180px;
     width: 450px;
   }
 
@@ -33,7 +32,7 @@
     background-size: cover;
     display: flex;
     flex-direction: column;
-    height: 50vh;
+    height: 50%;
     justify-content: center;
     position: relative;
     width: 100vw;
@@ -79,5 +78,9 @@
     font-weight: 800;
     height: 40px;
     width: 276px;
+  }
+
+  .loginPage {
+    height: 100vh;
   }
 }

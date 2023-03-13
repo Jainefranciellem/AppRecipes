@@ -103,69 +103,115 @@ export default function RecipeDetails() {
   if (typeRecipe) {
     return (
       <div>
-        <img
-          data-testid="recipe-photo"
-          width="300px"
-          src={ typeRecipes === 'meals' ? typeRecipe[0].strMealThumb
-            : typeRecipe[0].strDrinkThumb }
-          alt=""
-        />
-        <h1
-          data-testid="recipe-title"
-        >
-          { typeRecipes === 'meals' ? typeRecipe[0].strMeal : typeRecipe[0].strDrink }
-        </h1>
-        <h4
-          data-testid="recipe-category"
-        >
-          { typeRecipes === 'meals' ? typeRecipe[0].strCategory
-            : typeRecipe[0].strAlcoholic }
-        </h4>
-        { ingredient && ingredient?.map((ingredientRecipe, i) => (
-          <div
-            key={ i }
-            data-testid={ `${i}-ingredient-name-and-measure` }
+        <div className="divImgAndName">
+          <ButtonFavorite
+            className="buttonFavorite"
+            typeRecipe={ typeRecipe }
+            typeRecipes={ typeRecipes }
+            id={ id }
+          />
+          <ButtonShare
+            className="buttonShare"
+            pathname={ pathname }
+          />
+          { alert && <p>Link copied!</p> }
+          <img
+            className="imgDetails"
+            data-testid="recipe-photo"
+            width="300px"
+            src={ typeRecipes === 'meals' ? typeRecipe[0].strMealThumb
+              : typeRecipe[0].strDrinkThumb }
+            alt=""
+          />
+          <h1
+            className="nameDetails"
+            data-testid="recipe-title"
           >
-            { `${ingredientRecipe}: ${measure[i]}` }
+            { typeRecipes === 'meals' ? typeRecipe[0].strMeal : typeRecipe[0].strDrink }
+          </h1>
+        </div>
+        <div className="containerDetails">
+          <h3 className="h3-ingredients">Ingredients</h3>
+          <div className="divIngredients">
+            { ingredient && ingredient?.map((ingredientRecipe, i) => (
+              <li
+                className="li"
+                key={ i }
+                data-testid={ `${i}-ingredient-name-and-measure` }
+              >
+                { `${ingredientRecipe}: ${measure[i]}` }
+              </li>
+            ))}
           </div>
-        ))}
-        <p data-testid="instructions">
-          { typeRecipes === 'meals' ? typeRecipe[0].strInstructions
-            : typeRecipe[0].strInstructions }
-        </p>
-        { typeRecipes === 'meals' && (
-          <iframe
-            data-testid="video"
-            title="Video"
-            frameBorder="0"
-            src={ typeRecipe[0].strYoutube }
-            allowFullScreen
-          >
-            Video
-          </iframe>
-        )}
-        <div className="divRecomendation">
-          {
-            recomendation && (
-              typeRecipes === 'drinks'
-                ? recomendation?.slice(0, maxNumber).map((recipe, i) => (
-                  <div
-                    data-testid={ `${i}-recommendation-card` }
-                    key={ `recipe.idMeal ${i}` }
-                  >
-                    <p data-testid={ `${i}-recommendation-title` }>{ recipe.strMeal }</p>
-                  </div>
-                ))
-                : recomendation?.slice(0, maxNumber).map((recipe, i) => (
-                  <div
-                    data-testid={ `${i}-recommendation-card` }
-                    key={ `recipe.idDrink ${i}` }
-                  >
-                    <p data-testid={ `${i}-recommendation-title` }>{recipe.strDrink}</p>
-                  </div>
-                ))
-            )
-          }
+          <h3 className="h3-instruction">Instructions</h3>
+          <p className="divInstructions" data-testid="instructions">
+            { typeRecipes === 'meals' ? typeRecipe[0].strInstructions
+              : typeRecipe[0].strInstructions }
+          </p>
+          { typeRecipes === 'meals' && (
+            <div>
+              <h3 className="h3-youtube">Recipe Video</h3>
+              <div className="div-youtube">
+                <iframe
+                  data-testid="video"
+                  title="Video"
+                  frameBorder="0"
+                  src={ typeRecipe[0].strYoutube }
+                  allowFullScreen
+                >
+                  Video
+                </iframe>
+              </div>
+            </div>
+          )}
+          <h3 className="h3-Recommended">Recommended</h3>
+          <div className="divRecomendation">
+            {
+              recomendation && (
+                typeRecipes === 'drinks'
+                  ? recomendation?.slice(0, maxNumber).map((recipe, i) => (
+                    <div
+                      className="divNameAndImg"
+                      data-testid={ `${i}-recommendation-card` }
+                      key={ `recipe.idMeal ${i}` }
+                    >
+                      <img
+                        className="imgRecipe"
+                        data-testid="recipe-photo"
+                        src={ recipe.strMealThumb }
+                        alt="recomendation drinks"
+                      />
+                      <p
+                        className="nameRecipe"
+                        data-testid={ `${i}-recommendation-title` }
+                      >
+                        {recipe.strMeal}
+                      </p>
+                    </div>
+                  ))
+                  : recomendation?.slice(0, maxNumber).map((recipe, i) => (
+                    <div
+                      className="divNameAndImg"
+                      data-testid={ `${i}-recommendation-card` }
+                      key={ `recipe.idDrink ${i}` }
+                    >
+                      <img
+                        className="imgRecipe"
+                        data-testid="recipe-photo"
+                        src={ recipe.strDrinkThumb }
+                        alt="recomendation drinks"
+                      />
+                      <p
+                        className="nameRecipe"
+                        data-testid={ `${i}-recommendation-title` }
+                      >
+                        {recipe.strDrink}
+                      </p>
+                    </div>
+                  ))
+              )
+            }
+          </div>
         </div>
         <ButtonDetails
           startRecipe={ startRecipe }
@@ -174,13 +220,6 @@ export default function RecipeDetails() {
           typeRecipes={ typeRecipes }
           id={ id }
         />
-        <ButtonFavorite
-          typeRecipe={ typeRecipe }
-          typeRecipes={ typeRecipes }
-          id={ id }
-        />
-        <ButtonShare pathname={ pathname } />
-        { alert && <p>Link copied!</p> }
       </div>
     );
   }

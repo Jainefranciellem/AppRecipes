@@ -7,6 +7,11 @@ import Beef from '../style/img/beef.svg';
 import Chicken from '../style/img/chicken.svg';
 import Breakfast from '../style/img/breakfast.svg';
 import Goat from '../style/img/goat.svg';
+import OrdinaryDrink from '../style/img/drink.svg';
+import Cocktail from '../style/img/cocktail.svg';
+import Other from '../style/img/other.svg';
+import Shake from '../style/img/shake.svg';
+import Cocoa from '../style/img/cocoa.svg';
 import '../style/Recipes.css';
 
 const limits = 5;
@@ -16,7 +21,8 @@ function Recipes() {
 
   const location = useLocation();
   const [category, setCategory] = useState([]);
-  const [arrayImg] = useState([Dessert, Beef, Chicken, Breakfast, Goat]);
+  const [arrayImgFood] = useState([Dessert, Beef, Chicken, Breakfast, Goat]);
+  const [arrayImgDrink] = useState([OrdinaryDrink, Cocktail, Shake, Other, Cocoa]);
 
   const categoryMeals = async () => {
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
@@ -76,7 +82,11 @@ function Recipes() {
             data-testid={ `${element.strCategory}-category-filter` }
             onClick={ () => filterSelect(element.strCategory) }
           >
-            <img className="imgFilters" src={ arrayImg[i] } alt="" />
+            <img
+              className="imgFilters"
+              src={ location.pathname === '/meals' ? arrayImgFood[i] : arrayImgDrink[i] }
+              alt=""
+            />
           </button>
         )) }
 

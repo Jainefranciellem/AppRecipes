@@ -69,16 +69,25 @@ export default function RecipesList() {
           && (recipesFiltered.length > 0 ? recipesFiltered : recipes)
             ?.slice(0, maxNumber).map((recipe, i) => (
               <Link
+                className="link"
                 to={ `/drinks/${recipe.idDrink}` }
                 data-testid={ `${i}-recipe-card` }
                 key={ `${recipe.idDrink} ${i}` }
               >
-                <p data-testid={ `${i}-card-name` }>{recipe.strDrink}</p>
-                <img
-                  data-testid={ `${i}-card-img` }
-                  src={ recipe.strDrinkThumb }
-                  alt={ recipe.strDrink }
-                />
+                <div className="cardRecipe">
+                  <img
+                    className="imgRecipe"
+                    data-testid={ `${i}-card-img` }
+                    src={ recipe.strDrinkThumb }
+                    alt={ recipe.strDrink }
+                  />
+                  <p
+                    className="nameRecipe"
+                    data-testid={ `${i}-card-name` }
+                  >
+                    {recipe.strDrink}
+                  </p>
+                </div>
               </Link>
             ))}
     </div>
