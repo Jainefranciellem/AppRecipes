@@ -1,3 +1,4 @@
 .list-of-ingredients {
+  display: flex;
   text-decoration: line-through solid black;
 }

@@ -1,0 +1,19 @@
+#list {
+  display: flex;
+  margin-left: 10px;
+  margin-top: 6px;
+}
+.checkbox {
+  display: flex;
+  all: unset;
+  background-image: url('../style/img/Rectangle\ 10.svg');
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 20px;
+  display: block;
+  cursor: pointer;
+}
+
+.checkbox:checked {
+  background-image: url('../style/img/checked.svg');
+}

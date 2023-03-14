@@ -11,17 +11,17 @@ export default function ButtonFavorite({ typeRecipe, typeRecipes, id }) {
   const obj = {
     id,
     type: typeRecipes === 'meals' ? 'meal' : 'drink',
-    nationality: typeRecipe[0].strArea || '',
-    category: typeRecipe[0].strCategory || '',
-    alcoholicOrNot: typeRecipe[0].strAlcoholic || '',
-    name: typeRecipes === 'meals' ? typeRecipe[0].strMeal : typeRecipe[0].strDrink,
-    image: typeRecipes === 'meals' ? typeRecipe[0].strMealThumb
-      : typeRecipe[0].strDrinkThumb,
+    nationality: typeRecipe[0]?.strArea || '',
+    category: typeRecipe[0]?.strCategory || '',
+    alcoholicOrNot: typeRecipe[0]?.strAlcoholic || '',
+    name: typeRecipes === 'meals' ? typeRecipe[0]?.strMeal : typeRecipe[0]?.strDrink,
+    image: typeRecipes === 'meals' ? typeRecipe[0]?.strMealThumb
+      : typeRecipe[0]?.strDrinkThumb,
   };
   const handleClick = () => {
-    const favoriteRecipes = favorite.some((recipe) => recipe.id === id);
+    const favoriteRecipes = favorite.some((recipe) => recipe?.id === id);
     if (favoriteRecipes) {
-      setFavorite(favorite.filter((recipe) => recipe.id !== id));
+      setFavorite(favorite.filter((recipe) => recipe?.id !== id));
     } else {
       const newFavorites = [...favorite, obj];
       setFavorite(newFavorites);
@@ -29,7 +29,7 @@ export default function ButtonFavorite({ typeRecipe, typeRecipes, id }) {
     }
   };
   useEffect(() => {
-    const favoriteRecipes = favorite.some((recipe) => recipe.id === id);
+    const favoriteRecipes = favorite.some((recipe) => recipe?.id === id);
     setIcon(favoriteRecipes ? blackHeart : whiteHeart);
   }, [favorite]);
 

@@ -6,13 +6,14 @@ import RecipesContext from '../context/RecipesContext';
 import ButtonFavorite from '../components/ButtonFavorite';
 import ButtonShare from '../components/ButtonShare';
 import { fetchIdDrinks, fetchIdFood } from '../services/FetchApi';
+import '../style/RecipeInProgress.css';
 
 function RecipeInProgress() {
-  const { alert, typeRecipe, setTypeRecipe } = useContext(RecipesContext);
+  const { alert } = useContext(RecipesContext);
   const [done, setDone] = useState([]); // marked input array
   const [goLs2, setGoLs2] = useState([]); // accumulator
   const [lockLs, setLockLs] = useState(false);// lock to prevent the localstorage from being updated more than once
-  // const [responseApi, setResponseApi] = useState([]); // response from the api
+  const [responseApi, setResponseApi] = useState([]); // response from the api
   const [ingredient, setIngredient] = useState([]); // array of ingredients
   const [amount, setAmount] = useState([]); // array of amounts
 
@@ -104,13 +105,13 @@ function RecipeInProgress() {
     push(qualquer);
 
     const newObj = {
-      id: typeRecipe[0]?.idMeal ?? typeRecipe[0]?.idDrink,
-      nationality: typeRecipe[0]?.strArea ?? '',
-      name: typeRecipe[0]?.strMeal ?? typeRecipe[0]?.strDrink,
-      category: typeRecipe[0]?.strCategory ?? typeRecipe[0]?.strAlcoholic,
-      image: typeRecipe[0]?.strMealThumb ?? typeRecipe[0]?.strDrinkThumb,
-      tags: typeRecipe[0]?.strTags ? typeRecipe[0]?.strTags.split(',') : [],
-      alcoholicOrNot: typeRecipe[0]?.strAlcoholic ?? '',
+      id: responseApi[0]?.idMeal ?? responseApi[0]?.idDrink,
+      nationality: responseApi[0]?.strArea ?? '',
+      name: responseApi[0]?.strMeal ?? responseApi[0]?.strDrink,
+      category: responseApi[0]?.strCategory ?? responseApi[0]?.strAlcoholic,
+      image: responseApi[0]?.strMealThumb ?? responseApi[0]?.strDrinkThumb,
+      tags: responseApi[0]?.strTags ? responseApi[0]?.strTags.split(',') : [],
+      alcoholicOrNot: responseApi[0]?.strAlcoholic ?? '',
       type: typeRecipes.slice(0, typeRecipes.length - 1),
       doneDate: new Date().toISOString(),
     };
@@ -127,12 +128,12 @@ function RecipeInProgress() {
       if (typeRecipes === 'drinks') {
         const recipeDrink = await fetchIdDrinks(id);
         const { drinks } = recipeDrink;
-        setTypeRecipe(drinks);
+        setResponseApi(drinks);
         getIngredients(drinks);
       } else {
         const recipeFood = await fetchIdFood(id);
         const { meals } = recipeFood;
-        setTypeRecipe(meals);
+        setResponseApi(meals);
         getIngredients(meals);
       }
     };
@@ -152,7 +153,7 @@ function RecipeInProgress() {
       <div className="divImgAndName">
         <ButtonFavorite
           className="buttonFavorite"
-          typeRecipe={ typeRecipe }
+          typeRecipe={ responseApi }
           typeRecipes={ typeRecipes }
           id={ id }
         />
@@ -165,40 +166,23 @@ function RecipeInProgress() {
           className="imgDetails"
           data-testid="recipe-photo"
           width="300px"
-          src={ typeRecipe[0]?.strMealThumb ?? typeRecipe[0]?.strDrinkThumb }
+          src={ responseApi[0]?.strMealThumb ?? responseApi[0]?.strDrinkThumb }
           alt=""
         />
         <h1
           className="nameDetails"
           data-testid="recipe-title"
         >
-          { typeRecipe[0]?.strMeal ?? typeRecipe[0]?.strDrink }
+          { responseApi[0]?.strMeal ?? responseApi[0]?.strDrink }
         </h1>
       </div>
       <br />
-      {/* <button
-        className="buttonShare"
-        data-testid="share-btn"
-        onClick={ handleClick }
-      >
-        Share
-      </button>
-      <ButtonFavorite
-        typeRecipe={ typeRecipe }
-        typeRecipes={ typeRecipes }
-        id={ id }
-      />
-      { alert && <p>Link copied!</p> } */}
-      {/* <h4
-        data-testid="recipe-category"
-      >
-        { typeRecipe[0]?.strCategory ?? typeRecipe[0]?.strAlcoholic }
-      </h4> */}
       <div className="containerDetails">
         <h3 className="h3-ingredients">Ingredients</h3>
         <div className="divIngredients">
           { ingredient?.map((ingredientRecipe, i) => (
             <label
+              id="list"
               key={ `${ingredientRecipe}-${i}` }
               data-testid={ `${i}-ingredient-step` }
               className={ `${goLs2
@@ -206,7 +190,7 @@ function RecipeInProgress() {
             >
               <input
                 type="checkbox"
-                className="li"
+                className="checkbox"
                 checked={ goLs2?.includes(ingredientRecipe) }
                 onChange={ () => {
                   setDone((prev) => {
@@ -224,7 +208,7 @@ function RecipeInProgress() {
         </div>
         <h3 className="h3-instruction">Instructions</h3>
         <p data-testid="instructions" className="divInstructions">
-          { typeRecipe[0]?.strInstructions ?? typeRecipe[0]?.strInstructions }
+          { responseApi[0]?.strInstructions ?? responseApi[0]?.strInstructions }
         </p>
       </div>
       <button
