@@ -11,10 +11,9 @@ import RecipesContext from '../context/RecipesContext';
 export default function RecipeDetails() {
   const [drink, setDrink] = useState({});
   const [meal, setMeal] = useState({});
-  const { alert } = useContext(RecipesContext);
+  const { alert, typeRecipe, setTypeRecipe } = useContext(RecipesContext);
   const history = useHistory();
   const [recomendation, setRecomendation] = useState(null);
-  const [typeRecipe, setTypeRecipe] = useState(null);
   const [ingredient, setIngredient] = useState('');
   const [measure, setMeasure] = useState(null);
   const { pathname } = useLocation();

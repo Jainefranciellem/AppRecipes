@@ -1,0 +1,63 @@
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  background: transparent;
+  border: none;
+  margin: 20px;
+}
+
+.card {
+  display: flex;
+  margin: 15px;
+  width: 358px;
+  height: 135px; 
+  background: #FFFFFF;
+  border: 0.517989px solid #B1B1B1;
+  border-radius: 5px;
+}
+
+.cardImg {
+  width: 163.35px;
+  height: 134.85px;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.h3AndShare {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.share {
+  border: none;
+  background: transparent;
+}
+
+.p-category {
+  width: 70px;
+  height: 9px;
+  margin-left: 10px;
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 9px;
+  text-align: center;
+
+  color: #797D86;
+
+}
+
+.date-card {
+  font-family: 'Epilogue';
+  margin: 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 14px;
+
+  color: #1A1B1C;
+}

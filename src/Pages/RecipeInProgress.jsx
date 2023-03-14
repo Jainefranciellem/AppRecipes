@@ -1,68 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
+// import clipboard from 'clipboard-copy';
 import style from './RecipeInProgress.module.css';
+import RecipesContext from '../context/RecipesContext';
+import ButtonFavorite from '../components/ButtonFavorite';
+import ButtonShare from '../components/ButtonShare';
+import { fetchIdDrinks, fetchIdFood } from '../services/FetchApi';
 
 function RecipeInProgress() {
-  const [test, setTest] = useState([]); // array used in mocked file
+  const { alert, typeRecipe, setTypeRecipe } = useContext(RecipesContext);
   const [done, setDone] = useState([]); // marked input array
-  const [goLs, setGoLs] = useState([]); // array retrieved from localstorage
-  const [lockLs, setLockLs] = useState(false);
+  const [goLs2, setGoLs2] = useState([]); // accumulator
+  const [lockLs, setLockLs] = useState(false);// lock to prevent the localstorage from being updated more than once
+  // const [responseApi, setResponseApi] = useState([]); // response from the api
+  const [ingredient, setIngredient] = useState([]); // array of ingredients
+  const [amount, setAmount] = useState([]); // array of amounts
 
-  // const location = useLocation();
+  const { pathname } = useLocation();
+  const { id } = useParams();
   const match = useRouteMatch();
+  const { push } = useHistory();
 
-  const testDrinks = [
-    'Drinks-1',
-    'Drinks-2',
-    'Drinks-3',
-  ];
-  const testMeals = [
-    'Meals-1',
-    'Meals-2',
-    'Meals-3',
-    'Meals-4',
-    'Meals-5',
-    'Meals-6',
-    'Meals-7',
-    'Meals-8',
-  ];
+  const params = pathname.slice(1).split('/');
+  const typeRecipes = params[0];
 
   /**
-   * função resposavel por "setar o localstorage para testar o component"
-   * @param {*} x recebe o ID do item
+   * function responsible for the system to copy the link
    */
-  const saveLs = (x) => {
-    localStorage.setItem('inProgress', JSON
-      .stringify({ drinks: { [x]: testDrinks }, meals: { [x]: testMeals } }));
-  };
+  // const handleClick = () => {
+  //   const paramsUrl = match.url.split('/');
+  //   const URL = `http://localhost:3000/${paramsUrl[1]}/${paramsUrl[2]}`;
+  //   clipboard(URL);
+  //   setAlert(true);
+  //   const duration = 3000;
+  //   setTimeout(() => {
+  //     setAlert(false);
+  //   }, duration);
+  // };
 
   /**
-   * responsible for recovering the localstorage state and saving the key in the "state" of the component
+   * function responsible for getting from localstorage the ingredients already used
    */
-  const lsRecovery = () => {
+  const lsRecovery2 = () => {
     const mealsOrDrinks = match.url.split('/')[1]; // captures whether it is the meals or drinks route to be used as a key
     const recipeKey = match.params.id; // captures the id of the recipe to be used as a key
-
-    saveLs(recipeKey); // apenas para testes <-----------
 
     const lsSaved = JSON.parse(localStorage
-      .getItem('inProgress'))[mealsOrDrinks][recipeKey];
-    setTest(lsSaved);
-  };
-
-  /**
-   * retrieves information from localstorage and saves it in the "goLs" state to update already tagged entries
-   */
-  const checkedInputRecovery = () => {
-    const mealsOrDrinks = match.url.split('/')[1]; // captures whether it is the meals or drinks route to be used as a key
-    const recipeKey = match.params.id; // captures the id of the recipe to be used as a key
-
-    const ls = JSON.parse(localStorage.getItem('inProgressRecipes')) ?? {
+      .getItem('inProgressRecipes')) ?? {
       meals: {},
       drinks: {},
     };
 
-    setGoLs(ls[mealsOrDrinks][recipeKey]);
+    setGoLs2(lsSaved[mealsOrDrinks][recipeKey]);
   };
 
   /**
@@ -88,77 +77,166 @@ function RecipeInProgress() {
   };
 
   /**
-   * useEffect responsible for calling the function responsible for recovering the localstorage state
+   * function responsible for receiving the result from the api and extracting the ingredients and their respective quantities from within it
+   * @param {*} x - response from the api
+   */
+  const getIngredients = (x) => {
+    const ingredients = [];
+    const measures = [];
+    const max = 20;
+    for (let i = 1; i <= max; i += 1) {
+      const ingredientName = `strIngredient${i}`;
+      const measureName = `strMeasure${i}`;
+      if (x?.[0]?.[ingredientName]) {
+        ingredients.push(x[0][ingredientName]);
+        measures.push(x[0][measureName]);
+      }
+    }
+    setIngredient(ingredients);
+    setAmount(measures);
+  };
+
+  /**
+   * save object in localStorage
+   */
+  const savedLocalStorage = () => {
+    const qualquer = '/done-recipes';
+    push(qualquer);
+
+    const newObj = {
+      id: typeRecipe[0]?.idMeal ?? typeRecipe[0]?.idDrink,
+      nationality: typeRecipe[0]?.strArea ?? '',
+      name: typeRecipe[0]?.strMeal ?? typeRecipe[0]?.strDrink,
+      category: typeRecipe[0]?.strCategory ?? typeRecipe[0]?.strAlcoholic,
+      image: typeRecipe[0]?.strMealThumb ?? typeRecipe[0]?.strDrinkThumb,
+      tags: typeRecipe[0]?.strTags ? typeRecipe[0]?.strTags.split(',') : [],
+      alcoholicOrNot: typeRecipe[0]?.strAlcoholic ?? '',
+      type: typeRecipes.slice(0, typeRecipes.length - 1),
+      doneDate: new Date().toISOString(),
+    };
+
+    const ls = JSON.parse(localStorage.getItem('doneRecipes')) ?? [];
+    localStorage.setItem('doneRecipes', JSON.stringify([...ls, newObj]));
+  };
+
+  /**
+   * function responsible for executing requests to the api
    */
   useEffect(() => {
-    lsRecovery();
+    const fetchById = async () => {
+      if (typeRecipes === 'drinks') {
+        const recipeDrink = await fetchIdDrinks(id);
+        const { drinks } = recipeDrink;
+        setTypeRecipe(drinks);
+        getIngredients(drinks);
+      } else {
+        const recipeFood = await fetchIdFood(id);
+        const { meals } = recipeFood;
+        setTypeRecipe(meals);
+        getIngredients(meals);
+      }
+    };
+    fetchById();
   }, []);
 
+  /**
+   * function responsible for updating the localstorage and getting the ingredients already used
+   */
   useEffect(() => {
     if (lockLs) { checkedList(); }
-    checkedInputRecovery();
+    lsRecovery2();
   }, [done]);
 
   return (
     <div>
-      <h1 data-testid="recipe-title">Nome da Receita</h1>
-      <img
-        src="https://st2.depositphotos.com/4687049/6972/i/450/depositphotos_69724327-stock-photo-dish-with-meat-rice-and.jpg"
-        alt=""
-        data-testid="recipe-photo"
-      />
-
-      <br />
-
-      <button
-        data-testid="share-btn"
-      >
-        compartilhar
-      </button>
-      <button
-        data-testid="favorite-btn"
-      >
-        favoritar
-      </button>
-      <h2 data-testid="recipe-category">Categoria da Receita</h2>
-      <h3>Ingredientes</h3>
-      <div className={ style.list }>
-        {test?.map((ingredientRecipe, i) => (
-          <label
-            key={ `${ingredientRecipe}-${i}` }
-            data-testid={ `${i}-ingredient-step` }
-            className={ `${goLs
-              ?.includes(ingredientRecipe) && style['list-of-ingredients']}` }
-          >
-            <input
-              type="checkbox"
-              name=""
-              checked={ goLs?.includes(ingredientRecipe) }
-              // id="ingredient"
-              onChange={ () => {
-                setDone((prev) => {
-                  if (prev.includes(ingredientRecipe)) {
-                    return prev.filter((element) => element !== ingredientRecipe);
-                  }
-                  return [...prev, ingredientRecipe];
-                });
-                setLockLs(true);
-              } }
-            />
-            { `${ingredientRecipe}` }
-          </label>
-        ))}
-
+      <div className="divImgAndName">
+        <ButtonFavorite
+          className="buttonFavorite"
+          typeRecipe={ typeRecipe }
+          typeRecipes={ typeRecipes }
+          id={ id }
+        />
+        <ButtonShare
+          className="buttonShare"
+          pathname={ pathname }
+        />
+        { alert && <p>Link copied!</p> }
+        <img
+          className="imgDetails"
+          data-testid="recipe-photo"
+          width="300px"
+          src={ typeRecipe[0]?.strMealThumb ?? typeRecipe[0]?.strDrinkThumb }
+          alt=""
+        />
+        <h1
+          className="nameDetails"
+          data-testid="recipe-title"
+        >
+          { typeRecipe[0]?.strMeal ?? typeRecipe[0]?.strDrink }
+        </h1>
       </div>
-      <h3>Instruções</h3>
-      <p data-testid="instructions">Instruções da Receita</p>
+      <br />
+      {/* <button
+        className="buttonShare"
+        data-testid="share-btn"
+        onClick={ handleClick }
+      >
+        Share
+      </button>
+      <ButtonFavorite
+        typeRecipe={ typeRecipe }
+        typeRecipes={ typeRecipes }
+        id={ id }
+      />
+      { alert && <p>Link copied!</p> } */}
+      {/* <h4
+        data-testid="recipe-category"
+      >
+        { typeRecipe[0]?.strCategory ?? typeRecipe[0]?.strAlcoholic }
+      </h4> */}
+      <div className="containerDetails">
+        <h3 className="h3-ingredients">Ingredients</h3>
+        <div className="divIngredients">
+          { ingredient?.map((ingredientRecipe, i) => (
+            <label
+              key={ `${ingredientRecipe}-${i}` }
+              data-testid={ `${i}-ingredient-step` }
+              className={ `${goLs2
+                ?.includes(ingredientRecipe) && style['list-of-ingredients']}` }
+            >
+              <input
+                type="checkbox"
+                className="li"
+                checked={ goLs2?.includes(ingredientRecipe) }
+                onChange={ () => {
+                  setDone((prev) => {
+                    if (prev?.includes(ingredientRecipe)) {
+                      return prev?.filter((element) => element !== ingredientRecipe);
+                    }
+                    return [...prev, ingredientRecipe];
+                  });
+                  setLockLs(true);
+                } }
+              />
+              { `${ingredientRecipe}: ${amount[i]}` }
+            </label>
+          ))}
+        </div>
+        <h3 className="h3-instruction">Instructions</h3>
+        <p data-testid="instructions" className="divInstructions">
+          { typeRecipe[0]?.strInstructions ?? typeRecipe[0]?.strInstructions }
+        </p>
+      </div>
       <button
+        className="startBtn"
         data-testid="finish-recipe-btn"
+        type="button"
+        disabled={ ingredient.length !== goLs2?.length }
+        onClick={ savedLocalStorage }
       >
         Finalizar Receita
       </button>
     </div>
   );
 }
-
 export default RecipeInProgress;

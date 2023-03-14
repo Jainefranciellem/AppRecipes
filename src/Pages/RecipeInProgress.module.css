@@ -1,8 +1,3 @@
 .list-of-ingredients {
   text-decoration: line-through solid black;
 }
-
-.list {
-  display: flex;
-  flex-direction: column;
-}
