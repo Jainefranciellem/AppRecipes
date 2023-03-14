@@ -57,7 +57,9 @@ function RecipesCard({ recipe, index }) {
               className="date-card"
               data-testid={ `${index}-horizontal-done-date` }
             >
-              Done in: {recipe.doneDate}
+              Done in:
+              {' '}
+              {recipe.doneDate}
             </p>
           </div>
         </div>

@@ -165,7 +165,6 @@ function RecipeInProgress() {
         <img
           className="imgDetails"
           data-testid="recipe-photo"
-          width="300px"
           src={ responseApi[0]?.strMealThumb ?? responseApi[0]?.strDrinkThumb }
           alt=""
         />
@@ -215,10 +214,10 @@ function RecipeInProgress() {
         className="startBtn"
         data-testid="finish-recipe-btn"
         type="button"
-        disabled={ ingredient.length !== goLs2?.length }
+        disabled={ ingredient?.length !== goLs2?.length }
         onClick={ savedLocalStorage }
       >
-        Finalizar Receita
+        Recipe finished
       </button>
     </div>
   );

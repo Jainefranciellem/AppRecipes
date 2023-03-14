@@ -1,52 +1,49 @@
-@media screen and ( max-width : 600px ) {
+.header {
+  background: #fcdc36;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  justify-content: space-between;
+  width: 100vw;
+}
 
-  .header {
-    background: #fcdc36;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    justify-content: space-between;
-    width: 100vw;
-  }
+.logoHeader {
+  margin: 15px;
+  width: 50px;
+}
 
-  .logoHeader {
-    margin: 15px;
-    width: 50px;
-  }
+.p {
+  font-size: larger;
+  font-style: italic;
+  color: #41197F;
+}
+span {
+  font-weight: 800;
+}
 
-  .p {
-    font-size: larger;
-    font-style: italic;
-    color: #41197F;
-  }
-  span {
-    font-weight: 800;
-  }
+.buttonHeader {
+  background: transparent;
+  align-items: center;
+  text-align: center;
+  margin: 9px;
+  border: none;
+  cursor: pointer;
+}
 
-  .buttonHeader {
-    background: transparent;
-    align-items: center;
-    text-align: center;
-    margin: 9px;
-    border: none;
-    cursor: pointer;
-  }
+.containerHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .containerHeader {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .iconDish {
-    margin: 10px;
-    width: 65px;
-  }
-  .mealsTitle {
-    font-weight: 900;
-    font-size: 24px;
-    line-height: 20px;
-  }
+.iconDish {
+  margin: 10px;
+  width: 65px;
+}
+.mealsTitle {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 20px;
 }

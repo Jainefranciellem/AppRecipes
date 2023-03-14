@@ -96,7 +96,7 @@
 .divRecomendation {
   display: flex;
   overflow: scroll;
-  width: 400px;
+  width: 100vw;
   margin-bottom: 70px;
 }
 
