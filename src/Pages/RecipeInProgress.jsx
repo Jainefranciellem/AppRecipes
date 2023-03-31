@@ -26,20 +26,6 @@ function RecipeInProgress() {
   const typeRecipes = params[0];
 
   /**
-   * function responsible for the system to copy the link
-   */
-  // const handleClick = () => {
-  //   const paramsUrl = match.url.split('/');
-  //   const URL = `http://localhost:3000/${paramsUrl[1]}/${paramsUrl[2]}`;
-  //   clipboard(URL);
-  //   setAlert(true);
-  //   const duration = 3000;
-  //   setTimeout(() => {
-  //     setAlert(false);
-  //   }, duration);
-  // };
-
-  /**
    * function responsible for getting from localstorage the ingredients already used
    */
   const lsRecovery2 = () => {
