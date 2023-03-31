@@ -1,8 +1,8 @@
 import { number, arrayOf, string, shape } from 'prop-types';
-import CopyToClipboard from 'react-copy-to-clipboard';
+// import CopyToClipboard from 'react-copy-to-clipboard';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import share from '../style/img/Share.svg';
+// import Swal from 'sweetalert2';
+// import share from '../style/img/Share.svg';
 import '../style/DoneRecipes.css';
 
 function RecipesCard({ recipe, index }) {
@@ -22,32 +22,7 @@ function RecipesCard({ recipe, index }) {
             />
           </Link>
           <div>
-            <div className="h3AndShare">
-              <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
-              <CopyToClipboard
-                text={ `/meals/${recipe.id}` }
-                onCopy={ () => {
-                  navigator.clipboard.writeText(`http://localhost:3000/meals/${recipe.id}`);
-                  Swal.fire({
-                    position: 'center',
-                    width: 300,
-                    icon: 'success',
-                    title: 'Link copied!',
-                    showConfirmButton: false,
-                    timer: 1000,
-                  });
-                } }
-              >
-                <button
-                  src={ share }
-                  className="share"
-                  type="button"
-                  data-testid={ `${index}-horizontal-share-btn` }
-                >
-                  <img src={ share } alt="share-icon" />
-                </button>
-              </CopyToClipboard>
-            </div>
+            <h3 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h3>
             <p className="p-category" data-testid={ `${index}-horizontal-top-text` }>
               { recipe.type === 'meal'
                 ? `${recipe.nationality} - ${recipe.category}` : recipe.alcoholicOrNot }
