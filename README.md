@@ -1,5 +1,7 @@
 # Boas-vindas ao projeto Recipes App!
 
+## Deploy: https://app-recipes-ten.vercel.app/
+
 ## Descrição do Projeto
 
 O app de receitas é uma aplicação web que permite aos usuários visualizar, buscar, filtrar, favoritar, compartilhar e acompanhar o processo de preparação de receitas e drinks. Através da integração com duas API's distintas, uma para comidas e outra para bebidas, oferecemos uma ampla variedade de opções culinárias para explorar.
