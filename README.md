@@ -33,7 +33,7 @@ A utilização de modernas tecnologias do ecossistema React, como React Context 
   
 ## Instalação e inicialização
 1.  Clone o repositório
-- Use o comando: git clone git@github.com:felipe-lima-coelho/recipes-app.git.
+- Use o comando: git clone git@github.com:Jainefranciellem/AppRecipes.git
 - Entre na pasta do repositório que você acabou de clonar:
 - cd recipes-app
 2. Instale as dependências
