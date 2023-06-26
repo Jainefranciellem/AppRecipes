@@ -1,26 +1,10 @@
-# Projeto App de Receitas
-
-Projeto desenvolvido com a aplicação de tecnologias modernas e boas práticas de desenvolvimento:
-
-  - React Context API
-  - React Hooks
-  - TypeScript
-  - Arquitetura em Camadas - MSC
-  - Programação Orientada a Objetos (POO)
-  - MySQL
-  - Sequelize
-  - JWT
-  - BCrypt.js
+# Boas-vindas ao projeto Recipes App!
 
 ## Descrição do Projeto
 
 O app de receitas é uma aplicação web que permite aos usuários visualizar, buscar, filtrar, favoritar, compartilhar e acompanhar o processo de preparação de receitas e drinks. Através da integração com duas API's distintas, uma para comidas e outra para bebidas, oferecemos uma ampla variedade de opções culinárias para explorar.
 
 A utilização de modernas tecnologias do ecossistema React, como React Context API e React Hooks, proporciona uma experiência interativa e fluida aos usuários.
-
-
-
-https://github.com/joicenicolau/App-Receitas-Fullstack/assets/112522719/1218a696-df51-4592-826a-67586cf287ef
 
 
 ## Funcionalidades
